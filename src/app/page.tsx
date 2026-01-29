@@ -133,26 +133,16 @@ export default function Page() {
               </MotionInView>
             </div>
 
-            {/* Image Placeholder */}
+            {/* Hero: 장비 이미지 (public/main/ → /main/) */}
             <MotionInView className="relative" delay={0.08}>
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white shadow-soft">
-                <div className="absolute inset-0">
-                  <div className="absolute -right-12 -top-10 h-40 w-40 rounded-full bg-brand-600/15 blur-2xl" />
-                  <div className="absolute -bottom-14 -left-10 h-56 w-56 rounded-full bg-slate-900/10 blur-3xl" />
-                </div>
-                <div className="relative flex h-full flex-col items-center justify-center p-8 text-center">
-                  <p className="text-sm font-semibold text-slate-700">
-                    고해상도 장비 이미지 영역
-                  </p>
-                  <p className="mt-2 text-xs text-slate-500">
-                    실제 제품 사진(또는 렌더)을 여기에 교체해 넣으세요.
-                  </p>
-                  <div className="mt-6 w-full max-w-sm rounded-2xl border border-dashed border-slate-300 bg-white/60 p-6">
-                    <p className="text-xs text-slate-500">
-                      권장: 1600×1200 이상, 밝은 배경/제품 중심 구도
-                    </p>
-                  </div>
-                </div>
+                <img
+                  src="/main/device-photo.jpg"
+                  alt="스마트 방송장비"
+                  className="h-full w-full object-cover object-center"
+                  width={1600}
+                  height={1200}
+                />
               </div>
             </MotionInView>
           </div>
@@ -253,14 +243,15 @@ export default function Page() {
               <MotionInView className="md:col-span-5" delay={0.06}>
                 <div className="rounded-3xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-6 shadow-sm">
                   <a
-                    href="/catalog-2026.pdf"
+                    href="/catalog/catalog-2026.pdf"
+                    download
                     className="focus-ring inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink-900 px-6 py-4 text-sm font-semibold text-white shadow-soft hover:bg-ink-700"
                   >
                     2026 최신 카탈로그 다운로드
                     <Download className="h-4 w-4" />
                   </a>
                   <p className="mt-3 text-center text-xs text-slate-500">
-                    파일 경로: <span className="font-semibold">/public/catalog-2026.pdf</span>
+                    파일 경로: <span className="font-semibold">/catalog/catalog-2026.pdf</span>
                   </p>
                 </div>
               </MotionInView>
