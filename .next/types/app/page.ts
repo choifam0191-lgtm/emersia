@@ -1,4 +1,4 @@
-// File: F:\★ 영우테크\2. 방송장비\3S 홈페이지자료(에멀시아)\emersia\src\app\page.tsx
+// File: F:\website\emersia\src\app\page.tsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

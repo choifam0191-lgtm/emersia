@@ -4,6 +4,9 @@
 
 :root {
   color-scheme: light;
+  --canvas: #F8FAFC;
+  --brand-500: #2563eb;
+  --brand-600: #1d4ed8;
 }
 
 html {
@@ -11,18 +14,40 @@ html {
 }
 
 body {
-  @apply bg-white text-slate-900 antialiased;
+  @apply bg-canvas text-ink-900 antialiased;
 }
 
-/* Subtle grid texture (Apple-ish) */
+/* 테크니컬 격자 패턴 */
+.bg-tech-grid {
+  background-color: var(--canvas);
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* 데이터 스트림 느낌의 추상 라인 */
+.bg-data-lines {
+  background-color: var(--canvas);
+  background-image:
+    linear-gradient(105deg, transparent 45%, rgba(37, 99, 235, 0.04) 50%, transparent 55%),
+    linear-gradient(75deg, transparent 40%, rgba(30, 41, 59, 0.03) 50%, transparent 60%);
+  background-size: 120px 80px;
+}
+
+/* 글래스모피즘 카드 */
+.glass-card {
+  @apply rounded-2xl border border-white/60 bg-white/70 shadow-glass backdrop-blur-xl;
+}
+
+/* 포커스 링 (블루 강조) */
+.focus-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2;
+}
+
+/* 기존 subtle grid (호환) */
 .bg-subtle-grid {
   background-image: radial-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
   background-position: -8px -8px;
 }
-
-/* Nice focus ring */
-.focus-ring {
-  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2;
-}
-
