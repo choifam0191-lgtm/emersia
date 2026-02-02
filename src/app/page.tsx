@@ -132,8 +132,8 @@ export default function Page() {
               <MotionInView delay={0.18}>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <a
-                    href="/catalog/catalog-2026.pdf"
-                    download
+                    href="/catalog.pdf"
+                    download="catalog.pdf"
                     className="focus-ring inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-cta transition hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-cta-hover"
                   >
                     2026 최신 카탈로그
@@ -212,10 +212,7 @@ export default function Page() {
                 className="mt-6 md:mt-0 md:col-span-7"
                 delay={0.06}
               >
-                <div
-                  className="relative h-auto w-full overflow-x-auto rounded-2xl border border-slate-200/70 bg-white px-6 py-7 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-8 md:py-8 md:pb-9 lg:px-9 lg:py-9 lg:pb-10"
-                  style={{ maxWidth: "1000px" }}
-                >
+                <div className="relative h-auto w-full min-w-0 overflow-x-auto rounded-2xl border border-slate-200/70 bg-white px-6 py-7 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-8 md:py-8 md:pb-9 lg:px-9 lg:py-9 lg:pb-10">
                   <div className="absolute inset-y-6 left-6 w-px bg-slate-200 md:inset-y-7 md:left-7" />
                   <div className="space-y-4 pl-6 text-[15px] leading-relaxed text-ink-600 md:pl-7 md:text-[16px]">
                     <p>
@@ -251,7 +248,7 @@ export default function Page() {
             {/* Clients */}
             <MotionInView delay={0.12}>
               <div className="mt-12 flex w-full flex-col items-center justify-center">
-                <p className="w-full text-center text-3xl font-extrabold tracking-tight text-ink-900 md:text-4xl">
+                <p className="w-full text-center font-extrabold tracking-tight text-ink-900 [font-size:clamp(1.25rem,2.5vw,1.8rem)] md:text-2xl">
                   영우테크 주요 거래처
                 </p>
                 <img
@@ -271,15 +268,15 @@ export default function Page() {
         >
           <div className="mx-auto max-w-6xl px-5">
             <MotionInView>
-              <h2 className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-ink-900 md:text-4xl md:leading-snug">
+              <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-ink-900 md:text-4xl md:leading-snug md:max-w-2xl">
                 스마트 LTE 방송 시스템의 핵심 기능
               </h2>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-600 md:text-lg md:leading-relaxed">
+              <p className="mt-3 text-base leading-relaxed text-ink-600 md:max-w-2xl md:text-lg md:leading-relaxed">
                 도입 즉시 현장 안전 운영 효율을 끌어올립니다.
               </p>
             </MotionInView>
 
-            <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
               {features.map((f, idx) => (
                 <MotionInView
                   key={f.title}
@@ -319,15 +316,15 @@ export default function Page() {
               <MotionInView className="md:col-span-5" delay={0.06}>
                 <div className="rounded-2xl border border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50 p-6 shadow-soft">
                   <a
-                    href="/catalog/catalog-2026.pdf"
-                    download
+                    href="/catalog.pdf"
+                    download="catalog.pdf"
                     className="focus-ring inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-4 text-sm font-semibold text-white shadow-cta transition hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-cta-hover"
                   >
                     2026 최신 카탈로그 다운로드
                     <Download className="h-4 w-4" />
                   </a>
                   <p className="mt-3 text-center text-xs text-ink-500">
-                    파일 경로: /catalog/catalog-2026.pdf
+                    파일 경로: /catalog.pdf
                   </p>
                 </div>
               </MotionInView>
