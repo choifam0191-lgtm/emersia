@@ -212,17 +212,15 @@ export default function Page() {
                 className="mt-6 md:mt-0 md:col-span-7"
                 delay={0.06}
               >
-                <div className="relative h-auto w-full min-w-0 overflow-x-auto rounded-2xl border border-slate-200/70 bg-white px-6 py-7 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-8 md:py-8 md:pb-9 lg:px-9 lg:py-9 lg:pb-10">
+                <div className="relative h-auto w-full min-w-0 overflow-visible rounded-2xl border border-slate-200/70 bg-white px-6 py-7 pb-8 md:px-8 md:py-8 md:pb-9 lg:px-9 lg:py-9 lg:pb-10">
                   <div className="absolute inset-y-6 left-6 w-px bg-slate-200 md:inset-y-7 md:left-7" />
-                  <div className="space-y-4 pl-6 text-[15px] leading-relaxed text-ink-600 md:pl-7 md:text-[16px]">
+                  <div className="min-w-0 max-w-full space-y-4 pl-6 text-[15px] leading-relaxed text-ink-600 md:pl-7 md:text-[16px]" style={{ overflowWrap: "break-word", wordBreak: "keep-all" }}>
                     <p>
                       영우테크는 30년 업력을 가진 무전기 유통 및 통신 솔루션 전문
                       기업으로,
                       <br />
-                      <span className="whitespace-nowrap">
-                        오랜 현장 경험을 바탕으로 건설 현장에 가장 알맞은 통신
-                        환경을 제안해 왔습니다.
-                      </span>
+                      오랜 현장 경험을 바탕으로 건설 현장에 가장 알맞은 통신
+                      환경을 제안해 왔습니다.
                     </p>
                     <p>
                       2022년 &apos;3S&apos;의 첫선을 보인 이래, 수많은 현장 피드백과
@@ -235,10 +233,8 @@ export default function Page() {
                       을 정식 출시했습니다.
                     </p>
                     <p>
-                      <span className="whitespace-nowrap">
-                        장비 도입부터 운영 지원까지 모든 영역에서 현장의 안전을
-                        끝까지 생각하겠습니다.
-                      </span>
+                      장비 도입부터 운영 지원까지 모든 영역에서 현장의 안전을
+                      끝까지 생각하겠습니다.
                     </p>
                   </div>
                 </div>
@@ -319,13 +315,11 @@ export default function Page() {
                     href="/catalog.pdf"
                     download="catalog.pdf"
                     className="focus-ring inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-4 text-sm font-semibold text-white shadow-cta transition hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-cta-hover"
+                    aria-label="2026 최신 카탈로그 PDF 다운로드 (catalog.pdf)"
                   >
                     2026 최신 카탈로그 다운로드
                     <Download className="h-4 w-4" />
                   </a>
-                  <p className="mt-3 text-center text-xs text-ink-500">
-                    파일 경로: /catalog.pdf
-                  </p>
                 </div>
               </MotionInView>
             </div>
@@ -371,9 +365,19 @@ export default function Page() {
       </main>
 
       <footer className="border-t border-slate-200/60 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-10 text-sm text-ink-600 md:flex-row md:items-center md:justify-between">
-          <p className="font-semibold text-ink-900">영우테크</p>
-          <p>© {new Date().getFullYear()} Youngwoo Tech. All rights reserved.</p>
+        <div className="mx-auto max-w-6xl px-5 py-10">
+          <p className="font-semibold text-ink-900">(주)영우테크</p>
+          <div className="mt-3 space-y-1 text-sm leading-relaxed text-ink-600">
+            <p>대표: 최종임 | 사업자등록번호: 132-81-89811</p>
+            <p>주소: 경기 구리시 이문안로 138 (우)11946</p>
+            <p>통신판매업 신고증 번호: 제 2011-경기구리-0315호</p>
+            <p className="break-words">
+              Tel: 031-523-2340 | Fax: 031-553-0043 | Email: hichoi333@naver.com
+            </p>
+          </div>
+          <p className="mt-4 text-xs text-ink-500">
+            © {new Date().getFullYear()} Youngwoo Tech. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>
