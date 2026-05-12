@@ -1,91 +1,82 @@
 "use client";
 
-import { ArrowRight, Download, Megaphone, Shield, TowerControl } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Download } from "lucide-react";
 import { MotionInView } from "@/components/MotionInView";
-
-const heroCards = [
-  { title: "LTE 통신 지원", desc: "전국 통신 가능", Icon: TowerControl },
-  { title: "위급상황대처", desc: "신속한 상황 전파", Icon: Shield },
-  { title: "안전 안내 방송", desc: "원하는 시간에 방송", Icon: Megaphone },
-] as const;
 
 export function HeroSection() {
   return (
-    <section className="relative bg-canvas">
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:flex-row md:items-center md:justify-between md:gap-24 md:py-28 lg:gap-28">
-        <div className="md:max-w-[580px]">
-          <MotionInView delay={0.06}>
-            <h1 className="text-balance font-extrabold leading-tight tracking-tight text-ink-900">
-              <span className="block whitespace-nowrap [font-size:clamp(1.45rem,3.2vw,2.15rem)]">
-                전국 어디서나 끊김 없는{" "}
-                <span className="text-brand-600">안전 방송!</span>
-              </span>
-              <span className="mt-1 block [font-size:clamp(1.85rem,4.2vw,2.75rem)]">
-                스마트 <span className="text-brand-600">LTE</span> 방송 시스템{" "}
-                <span className="text-brand-600">3S</span>
-              </span>
+    <section className="bg-white">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:flex-row md:items-center md:justify-between md:gap-16 md:py-28">
+        {/* 텍스트 */}
+        <div className="md:max-w-[560px]">
+          <MotionInView delay={0.04}>
+            <span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+              스마트 LTE 방송시스템
+            </span>
+          </MotionInView>
+
+          <MotionInView delay={0.08}>
+            <h1 className="mt-4 text-balance text-3xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-[2.4rem] md:leading-snug">
+              건설현장 안전방송,
+              <br className="hidden md:block" /> LTE로 빠르게 구축하십시오
             </h1>
           </MotionInView>
+
           <MotionInView delay={0.12}>
-            <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-ink-600 md:text-lg">
-              효율적인 현장 안전 관리와 위급 상황 시 효과적인 대처를 지원합니다.
+            <p className="mt-5 text-base leading-relaxed text-slate-600 md:text-lg">
+              유선 공사 부담 없이 상황실에서 현장 방송장비를 원격 운영하고,
+              혹서기 안내·비상대피·외국인 근로자 다국어 안내·작업 공지 방송을
+              신속하게 전달합니다.
             </p>
           </MotionInView>
-          <MotionInView delay={0.18}>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+
+          <MotionInView delay={0.16}>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-700"
+              >
+                무료 방문시연 신청
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                견적 문의하기
+              </Link>
               <a
                 href="/catalog/catalog-2026.pdf"
                 download="catalog-2026.pdf"
-                className="focus-ring inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-cta transition hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-cta-hover"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
-                2026 최신 카탈로그
+                카탈로그 다운로드
                 <Download className="h-4 w-4" />
-              </a>
-              <a
-                href="#products"
-                className="focus-ring inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-ink-800 shadow-sm transition hover:bg-slate-50"
-              >
-                주요 특징 보기
-                <ArrowRight className="h-4 w-4" />
               </a>
             </div>
           </MotionInView>
-          <MotionInView delay={0.24}>
-            <div className="mt-10 flex flex-nowrap gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-visible lg:pb-0">
-              {heroCards.map((c) => (
-                <div
-                  key={c.title}
-                  className="min-w-[320px] flex-none rounded-2xl bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-soft-lg lg:min-w-0 lg:flex-1"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50">
-                      <c.Icon className="h-5 w-5 text-brand-600" />
-                    </span>
-                    <div className="pt-0.5">
-                      <p className="whitespace-nowrap text-sm font-bold leading-tight text-ink-900">
-                        {c.title}
-                      </p>
-                      <p className="mt-1 whitespace-nowrap text-xs font-medium text-ink-600">
-                        {c.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+
+          <MotionInView delay={0.2}>
+            <p className="mt-6 text-sm leading-relaxed text-slate-500">
+              무전기·통신 솔루션 현장 경험을 바탕으로 장비 구성, 설치,
+              사용 교육, 운영 지원까지 함께 제공합니다.
+            </p>
           </MotionInView>
         </div>
 
-        <MotionInView className="relative" delay={0.08}>
-          <div className="relative mx-auto w-full max-w-[512px] md:mx-0 md:shrink-0">
-            <img
-              src="/main/device-photo.jpg"
-              alt="스마트 방송장비"
-              className="h-auto w-full"
-              width={1600}
-              height={1200}
-            />
-          </div>
+        {/* 이미지 */}
+        <MotionInView
+          className="relative mx-auto w-full max-w-[480px] md:mx-0 md:shrink-0"
+          delay={0.06}
+        >
+          <img
+            src="/main/device-photo.jpg"
+            alt="스마트 LTE 방송장비"
+            className="h-auto w-full rounded-2xl object-cover shadow-sm"
+            width={960}
+            height={720}
+          />
         </MotionInView>
       </div>
     </section>
