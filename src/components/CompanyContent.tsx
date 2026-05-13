@@ -1,81 +1,13 @@
 "use client";
 
 import {
-  Activity,
-  BookOpen,
-  CheckCircle,
-  HardHat,
   Mail,
   MapPin,
   MessageCircle,
   Phone,
-  Radio,
-  Signal,
-  TowerControl,
-  Wifi,
 } from "lucide-react";
 import { MotionInView } from "@/components/MotionInView";
 import { SectionTitle } from "@/components/SectionTitle";
-import { FeatureCard } from "@/components/FeatureCard";
-
-const strengths = [
-  {
-    Icon: Signal,
-    title: "현장 중심 통신 솔루션 경험",
-    description:
-      "무전기 유통 및 통신 솔루션 분야에서 쌓은 현장 경험을 바탕으로 실제 운영 환경에 맞는 솔루션을 제안합니다.",
-  },
-  {
-    Icon: HardHat,
-    title: "건설현장 적용을 고려한 장비 구성",
-    description:
-      "건설현장 환경을 고려하여 설치와 운영이 용이한 장비 구성을 제안합니다.",
-  },
-  {
-    Icon: BookOpen,
-    title: "설치, 사용 교육, 운영 지원",
-    description:
-      "장비 설치 이후에도 현장 담당자가 편리하게 사용할 수 있도록 교육과 운영 지원을 제공합니다.",
-  },
-  {
-    Icon: Wifi,
-    title: "스마트 LTE 방송시스템 개발 및 공급",
-    description:
-      "현장 안전방송 요구에 맞춰 LTE 기반 스마트 방송시스템을 개발하고 공급합니다.",
-  },
-] as const;
-
-const domains = [
-  {
-    Icon: Wifi,
-    title: "스마트 LTE 방송시스템",
-    description: "건설현장과 산업현장을 위한 LTE 기반 안전방송 시스템 개발 및 공급",
-  },
-  {
-    Icon: Radio,
-    title: "디지털 무전기 유통",
-    description: "현장 통신을 위한 디지털 무전기 유통 및 솔루션 제공",
-  },
-  {
-    Icon: Activity,
-    title: "AED 개발/유통 관련 사업",
-    description: "자동 심장충격기(AED) 관련 개발 및 유통 사업",
-  },
-  {
-    Icon: TowerControl,
-    title: "현장 통신 솔루션",
-    description: "현장 환경에 맞는 통신 솔루션 설계 및 지원",
-  },
-] as const;
-
-const supportItems = [
-  "현장 상담",
-  "장비 구성 제안",
-  "설치 지원",
-  "사용 교육",
-  "운영 문의 대응",
-  "카탈로그·제안자료 제공",
-] as const;
 
 export function CompanyContent() {
   return (
@@ -86,102 +18,34 @@ export function CompanyContent() {
           <MotionInView>
             <p className="text-sm font-semibold text-blue-400">회사소개</p>
             <h1 className="mt-3 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl md:leading-snug">
-              현장을 이해하는
-              <br />
-              통신·안전방송 솔루션 기업
+              항상 안전을 생각하는,<br />영우테크입니다
             </h1>
           </MotionInView>
           <MotionInView delay={0.08}>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
-              영우테크는 무전기 유통 및 통신 솔루션 분야에서 축적한 현장 경험을 바탕으로,
-              건설현장과 산업현장에 적합한 스마트 LTE 방송시스템을 개발·공급하고 있습니다.
-            </p>
+            <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
+              <p>
+                영우테크는 무전기 유통과 통신 솔루션 분야에서 오랜 시간 현장 가까이에서
+                일해왔습니다. AED(자동 심장충격기) 유통과 스마트 LTE 방송시스템
+                개발·공급까지, 다루는 제품은 달라졌지만 중심에는 항상 현장 안전이 있습니다.
+              </p>
+              <p>
+                저희가 마주한 현장들은 대부분 '안내가 제때 전달되지 않는 곳',
+                '위급 상황에서 소통이 어려운 곳'이었습니다. 그 경험에서 출발해,
+                현장 담당자가 실제로 사용할 수 있는 방식으로 솔루션을 구성합니다.
+                복잡한 공사 없이 LTE 통신으로 빠르게 구축할 수 있는 안전방송 시스템도
+                그 고민에서 나왔습니다.
+              </p>
+              <p>
+                단순히 장비를 납품하는 것이 아니라, 구성 상담부터 설치, 사용 교육,
+                운영 지원까지 함께합니다. 어떤 현장에서든 안전이 제대로 전달되도록 하는 것,
+                그것이 영우테크가 일하는 방식입니다.
+              </p>
+            </div>
           </MotionInView>
         </div>
       </section>
 
-      {/* 2. 핵심 강점 */}
-      <section className="border-t border-slate-200/50 bg-white py-20 md:py-28">
-        <div className="mx-auto max-w-6xl px-5">
-          <MotionInView>
-            <SectionTitle
-              eyebrow="핵심 강점"
-              title="현장 경험에서 출발한 솔루션을 제공합니다."
-            />
-          </MotionInView>
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {strengths.map((s, idx) => (
-              <MotionInView key={s.title} delay={0.05 + idx * 0.05} asCard>
-                <FeatureCard Icon={s.Icon} title={s.title} description={s.description} />
-              </MotionInView>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3. 사업 분야 */}
-      <section className="border-t border-slate-200/50 bg-slate-50 py-20 md:py-28">
-        <div className="mx-auto max-w-6xl px-5">
-          <MotionInView>
-            <SectionTitle
-              eyebrow="사업 분야"
-              title="현장 통신과 안전방송을 핵심 사업으로 합니다."
-            />
-          </MotionInView>
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {domains.map((d, idx) => (
-              <MotionInView key={d.title} delay={0.05 + idx * 0.05}>
-                <div className="flex gap-4 rounded-2xl border border-slate-200/60 bg-white p-6">
-                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50">
-                    <d.Icon
-                      className="h-5 w-5 text-blue-600"
-                      strokeWidth={1.8}
-                      aria-hidden
-                    />
-                  </div>
-                  <div>
-                    <p className="font-bold text-slate-900">{d.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                      {d.description}
-                    </p>
-                  </div>
-                </div>
-              </MotionInView>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. 지원 범위 */}
-      <section className="border-t border-slate-200/50 bg-white py-20 md:py-28">
-        <div className="mx-auto max-w-6xl px-5">
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <MotionInView>
-              <SectionTitle
-                eyebrow="지원 범위"
-                title="도입 전부터 운영까지 함께합니다."
-                description="장비 도입의 모든 단계에서 필요한 지원을 제공합니다."
-              />
-            </MotionInView>
-            <MotionInView delay={0.08}>
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {supportItems.map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <CheckCircle
-                      className="h-5 w-5 shrink-0 text-blue-600"
-                      strokeWidth={2}
-                      aria-hidden
-                    />
-                    <span className="text-sm font-medium text-slate-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </MotionInView>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. 주요 거래처 / 협력사 */}
+      {/* 2. 주요 거래처 / 협력사 */}
       <section className="border-t border-slate-200/50 bg-slate-50 py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-5">
           <MotionInView>
@@ -207,7 +71,7 @@ export function CompanyContent() {
         </div>
       </section>
 
-      {/* 6. 연락처 / 오시는 길 */}
+      {/* 3. 연락처 / 오시는 길 */}
       <section className="border-t border-slate-200/50 bg-white py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-5">
           <MotionInView>
@@ -237,7 +101,7 @@ export function CompanyContent() {
                 <p className="mt-3 text-xs font-semibold text-slate-500">전화</p>
                 <a
                   href="tel:031-523-2340"
-                  className="mt-1 block text-sm font-medium text-slate-800 hover:text-blue-600 transition"
+                  className="mt-1 block text-sm font-medium text-slate-800 transition hover:text-blue-600"
                 >
                   031-523-2340
                 </a>
@@ -256,7 +120,7 @@ export function CompanyContent() {
                   href="https://pf.kakao.com/_texjAX/chat"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 block text-sm font-medium text-slate-800 hover:text-blue-600 transition"
+                  className="mt-1 block text-sm font-medium text-slate-800 transition hover:text-blue-600"
                 >
                   채널 바로가기
                 </a>
@@ -268,7 +132,7 @@ export function CompanyContent() {
                   <MapPin className="h-4 w-4 text-blue-600" aria-hidden />
                 </div>
                 <p className="mt-3 text-xs font-semibold text-slate-500">주소</p>
-                <p className="mt-1 text-sm font-medium text-slate-800 leading-relaxed">
+                <p className="mt-1 text-sm font-medium leading-relaxed text-slate-800">
                   경기도 구리시<br />이문안로 138 2층
                 </p>
               </div>
