@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
+import { CompanyContent } from "@/components/CompanyContent";
+import { CTASection } from "@/components/CTASection";
 
 export const metadata: Metadata = {
-  title: "회사소개",
-  description: "emersia 회사소개 페이지입니다.",
+  title: "회사소개 | 영우테크",
+  description:
+    "무전기·통신 솔루션 분야에서 축적한 현장 경험을 바탕으로 스마트 LTE 방송시스템을 개발·공급하는 영우테크입니다.",
 };
 
 export default function CompanyPage() {
   return (
-    <main className="flex min-h-[60vh] items-center justify-center bg-slate-50">
-      <div className="text-center">
-        <p className="text-sm font-semibold text-blue-600">준비중</p>
-        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
-          회사소개
-        </h1>
-        <p className="mt-3 text-base text-slate-600">콘텐츠를 준비하고 있습니다.</p>
-      </div>
+    <main>
+      <CompanyContent />
+      <CTASection />
     </main>
   );
 }
