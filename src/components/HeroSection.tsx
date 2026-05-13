@@ -34,14 +34,14 @@ export function HeroSection() {
           <MotionInView delay={0.16}>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/contact"
+                href="/contact?type=demo"
                 className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-700"
               >
                 무료 방문시연 신청
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/contact"
+                href="/contact?type=quote"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
                 견적 문의하기

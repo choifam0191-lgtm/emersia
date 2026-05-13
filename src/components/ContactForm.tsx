@@ -4,13 +4,35 @@ import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 type Status = "idle" | "loading" | "success" | "error";
+type InquiryType = "무료 방문시연" | "견적문의" | "카탈로그 요청" | "상담 요청";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function ContactForm() {
+const INQUIRY_TYPES: InquiryType[] = ["무료 방문시연", "견적문의", "카탈로그 요청", "상담 요청"];
+
+const PURPOSE_OPTIONS = [
+  "혹서기 안전방송",
+  "비상대피방송",
+  "외국인 근로자 다국어 안내",
+  "작업 공지",
+  "복합 구성",
+  "기타",
+];
+
+function resolveInitialType(type?: string): InquiryType {
+  if (type === "demo") return "무료 방문시연";
+  if (type === "quote") return "견적문의";
+  if (type === "catalog") return "카탈로그 요청";
+  return "상담 요청";
+}
+
+type Props = { initialType?: string };
+
+export function ContactForm({ initialType }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ phone?: string; email?: string }>({});
+  const [inquiryType, setInquiryType] = useState<InquiryType>(resolveInitialType(initialType));
 
   function handlePhoneInput(e: React.FormEvent<HTMLInputElement>) {
     const input = e.currentTarget;
@@ -26,6 +48,8 @@ export function ContactForm() {
     const name = (form.elements.namedItem("name") as HTMLInputElement).value;
     const phone = (form.elements.namedItem("phone") as HTMLInputElement).value;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const location = (form.elements.namedItem("location") as HTMLInputElement).value;
+    const purpose = (form.elements.namedItem("purpose") as HTMLSelectElement).value;
     const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
 
     const errors: { phone?: string; email?: string } = {};
@@ -43,7 +67,7 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company, name, phone, email, message }),
+        body: JSON.stringify({ company, name, phone, email, location, purpose, inquiryType, message }),
       });
 
       if (!res.ok) {
@@ -53,6 +77,7 @@ export function ContactForm() {
 
       setStatus("success");
       form.reset();
+      setInquiryType(resolveInitialType(initialType));
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "오류가 발생했습니다.");
       setStatus("error");
@@ -61,13 +86,13 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex w-full max-w-xl flex-col items-center gap-3 rounded-2xl border border-slate-200/60 bg-white p-8 text-center shadow-soft">
-        <CheckCircle className="h-10 w-10 text-brand-600" />
-        <p className="text-base font-bold text-ink-900">문의가 접수됐습니다!</p>
-        <p className="text-sm text-ink-600">빠른 시일 내로 연락드리겠습니다.</p>
+      <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-200/60 bg-white p-8 text-center shadow-sm">
+        <CheckCircle className="h-10 w-10 text-blue-600" />
+        <p className="text-base font-bold text-slate-900">문의가 접수됐습니다!</p>
+        <p className="text-sm text-slate-600">빠른 시일 내로 연락드리겠습니다.</p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-2 text-sm font-medium text-brand-600 underline-offset-2 hover:underline"
+          className="mt-2 text-sm font-medium text-blue-600 underline-offset-2 hover:underline"
         >
           다시 문의하기
         </button>
@@ -76,23 +101,47 @@ export function ContactForm() {
   }
 
   return (
-    <div className="w-full max-w-xl rounded-2xl border border-slate-200/60 bg-white p-6 text-left shadow-soft">
-      <form onSubmit={handleSubmit} className="grid gap-4">
+    <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm">
+      <form onSubmit={handleSubmit} className="grid gap-5">
+        {/* 문의 유형 */}
+        <div className="grid gap-2">
+          <span className="text-sm font-semibold text-slate-800">문의 유형</span>
+          <div className="flex flex-wrap gap-2">
+            {INQUIRY_TYPES.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setInquiryType(t)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  inquiryType === t
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 회사명 */}
         <label className="grid gap-2">
-          <span className="text-sm font-semibold text-ink-800">회사명</span>
+          <span className="text-sm font-semibold text-slate-800">회사명</span>
           <input
-            className="focus-ring h-12 rounded-xl border-0 bg-slate-50/80 px-4 text-sm text-ink-900 transition-colors placeholder:text-ink-500 focus:bg-white focus:ring-2 focus:ring-brand-500"
+            className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="company"
             placeholder="(주)에머시아"
             required
             disabled={status === "loading"}
           />
         </label>
+
+        {/* 담당자명 + 연락처 */}
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="grid gap-2">
-            <span className="text-sm font-semibold text-ink-800">이름</span>
+            <span className="text-sm font-semibold text-slate-800">담당자명</span>
             <input
-              className="focus-ring h-12 rounded-xl border-0 bg-slate-50/80 px-4 text-sm text-ink-900 transition-colors placeholder:text-ink-500 focus:bg-white focus:ring-2 focus:ring-brand-500"
+              className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               name="name"
               placeholder="홍길동"
               required
@@ -100,9 +149,13 @@ export function ContactForm() {
             />
           </label>
           <label className="grid gap-2">
-            <span className="text-sm font-semibold text-ink-800">연락처</span>
+            <span className="text-sm font-semibold text-slate-800">연락처</span>
             <input
-              className={`focus-ring h-12 rounded-xl border-0 bg-slate-50/80 px-4 text-sm text-ink-900 transition-colors placeholder:text-ink-500 focus:bg-white focus:ring-2 ${fieldErrors.phone ? "ring-2 ring-red-400" : "focus:ring-brand-500"}`}
+              className={`h-12 rounded-xl border bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 ${
+                fieldErrors.phone
+                  ? "border-red-400 ring-2 ring-red-400"
+                  : "border-slate-200 focus:ring-blue-500"
+              }`}
               name="phone"
               placeholder="01012345678"
               inputMode="numeric"
@@ -117,10 +170,16 @@ export function ContactForm() {
             )}
           </label>
         </div>
+
+        {/* 이메일 */}
         <label className="grid gap-2">
-          <span className="text-sm font-semibold text-ink-800">이메일</span>
+          <span className="text-sm font-semibold text-slate-800">이메일</span>
           <input
-            className={`focus-ring h-12 rounded-xl border-0 bg-slate-50/80 px-4 text-sm text-ink-900 transition-colors placeholder:text-ink-500 focus:bg-white focus:ring-2 ${fieldErrors.email ? "ring-2 ring-red-400" : "focus:ring-brand-500"}`}
+            className={`h-12 rounded-xl border bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 ${
+              fieldErrors.email
+                ? "border-red-400 ring-2 ring-red-400"
+                : "border-slate-200 focus:ring-blue-500"
+            }`}
             type="text"
             name="email"
             placeholder="name@company.com"
@@ -131,10 +190,47 @@ export function ContactForm() {
             <span className="text-xs text-red-500">{fieldErrors.email}</span>
           )}
         </label>
+
+        {/* 현장 위치 (선택) */}
         <label className="grid gap-2">
-          <span className="text-sm font-semibold text-ink-800">문의 내용</span>
+          <span className="text-sm font-semibold text-slate-800">
+            현장 위치{" "}
+            <span className="font-normal text-slate-400">(선택)</span>
+          </span>
+          <input
+            className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="location"
+            placeholder="예: 경기 수원시"
+            disabled={status === "loading"}
+          />
+        </label>
+
+        {/* 도입 목적 */}
+        <label className="grid gap-2">
+          <span className="text-sm font-semibold text-slate-800">도입 목적</span>
+          <select
+            className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="purpose"
+            required
+            disabled={status === "loading"}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              선택해주세요
+            </option>
+            {PURPOSE_OPTIONS.map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {/* 문의 내용 */}
+        <label className="grid gap-2">
+          <span className="text-sm font-semibold text-slate-800">문의 내용</span>
           <textarea
-            className="focus-ring min-h-32 resize-y rounded-xl border-0 bg-slate-50/80 px-4 py-3 text-sm text-ink-900 transition-colors placeholder:text-ink-500 focus:bg-white focus:ring-2 focus:ring-brand-500"
+            className="min-h-32 resize-y rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="message"
             placeholder="필요하신 장비/수량/설치 환경 등을 간단히 적어주세요."
             required
@@ -151,7 +247,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="focus-ring mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-4 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 hover:shadow-soft-lg disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "loading" ? (
             <>
@@ -160,7 +256,7 @@ export function ContactForm() {
             </>
           ) : (
             <>
-              견적 문의 보내기
+              문의 보내기
               <ArrowRight className="h-4 w-4" />
             </>
           )}

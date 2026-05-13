@@ -16,14 +16,14 @@ export function CTASection() {
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
-            href="/contact"
+            href="/contact?type=demo"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:w-auto"
           >
             무료 방문시연 신청
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
-            href="/contact"
+            href="/contact?type=quote"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-600 bg-transparent px-7 py-3.5 text-sm font-semibold text-white transition hover:border-slate-400 hover:bg-slate-800 sm:w-auto"
           >
             견적 문의하기

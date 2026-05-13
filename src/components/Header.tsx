@@ -46,13 +46,13 @@ export function Header() {
         {/* 데스크탑 CTA */}
         <div className="hidden items-center gap-2.5 md:flex">
           <Link
-            href="/contact"
+            href="/contact?type=quote"
             className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
           >
             견적문의
           </Link>
           <Link
-            href="/contact"
+            href="/contact?type=demo"
             className="inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
           >
             무료 방문시연
@@ -98,7 +98,7 @@ export function Header() {
 
             <div className="mt-3 flex flex-col gap-2 border-t border-slate-100 pt-3">
               <Link
-                href="/contact"
+                href="/contact?type=demo"
                 className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
                 onClick={() => setOpen(false)}
               >
@@ -106,7 +106,7 @@ export function Header() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/contact"
+                href="/contact?type=quote"
                 className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                 onClick={() => setOpen(false)}
               >
