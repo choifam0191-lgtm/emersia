@@ -32,11 +32,11 @@ const sections = [
     active: true,
   },
   {
-    title: "설치사례 관리",
-    description: "사례 추가·수정·삭제, 사진 업로드",
+    title: "설치사례 사진 관리",
+    description: "각 사례별 대표 이미지 및 갤러리 사진 업로드·삭제",
     icon: Images,
     href: "/admin/cases",
-    active: false,
+    active: true,
   },
   {
     title: "문의 수신 현황",
