@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
@@ -70,16 +70,33 @@ export default async function ContactPage({
                       hichoi333@naver.com
                     </a>
                   </div>
-                  {/* TODO: 전화번호 확정 후 아래 주석 해제 및 번호 입력 */}
-                  {/* <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3">
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
-                    <span className="text-sm text-slate-400">전화번호 준비중</span>
-                  </div> */}
-                  {/* TODO: 카카오톡 채널 확정 후 아래 주석 해제 */}
-                  {/* <div className="flex items-start gap-3">
-                    <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
-                    <span className="text-sm text-slate-400">카카오톡 채널 준비중</span>
-                  </div> */}
+                    <a
+                      href="tel:031-523-2340"
+                      className="text-sm text-slate-700 transition hover:text-blue-600"
+                    >
+                      031-523-2340
+                    </a>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span
+                      className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
+                      style={{ backgroundColor: "#FEE500" }}
+                    >
+                      <svg viewBox="0 0 24 24" fill="#3A1D1D" className="h-2.5 w-2.5" aria-hidden="true">
+                        <path d="M12 3C6.477 3 2 6.72 2 11.3c0 2.94 1.874 5.522 4.683 7.07L5.5 22l4.132-2.297A11.8 11.8 0 0 0 12 19.6c5.523 0 10-3.72 10-8.3C22 6.72 17.523 3 12 3z" />
+                      </svg>
+                    </span>
+                    <a
+                      href="https://pf.kakao.com/_texjAX/chat"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-slate-700 transition hover:text-blue-600"
+                    >
+                      카카오톡 채널 바로가기
+                    </a>
+                  </div>
                 </div>
               </div>
             </aside>

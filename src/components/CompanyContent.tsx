@@ -231,32 +231,46 @@ export function CompanyContent() {
 
               {/* 전화 */}
               <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100">
-                  <Phone className="h-4 w-4 text-slate-400" aria-hidden />
+                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50">
+                  <Phone className="h-4 w-4 text-blue-600" aria-hidden />
                 </div>
                 <p className="mt-3 text-xs font-semibold text-slate-500">전화</p>
-                {/* TODO: 전화번호 확정 후 href="tel:XXXXXXXX" 및 번호 표시 업데이트 */}
-                <p className="mt-1 text-sm text-slate-400">준비중</p>
+                <a
+                  href="tel:031-523-2340"
+                  className="mt-1 block text-sm font-medium text-slate-800 hover:text-blue-600 transition"
+                >
+                  031-523-2340
+                </a>
               </div>
 
               {/* 카카오톡 */}
               <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100">
-                  <MessageCircle className="h-4 w-4 text-slate-400" aria-hidden />
+                <div
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg"
+                  style={{ backgroundColor: "#FEE500" }}
+                >
+                  <MessageCircle className="h-4 w-4" style={{ color: "#3A1D1D" }} aria-hidden />
                 </div>
                 <p className="mt-3 text-xs font-semibold text-slate-500">카카오톡</p>
-                {/* TODO: 카카오 채널 링크 확정 후 <a> 태그로 변경 */}
-                <p className="mt-1 text-sm text-slate-400">준비중</p>
+                <a
+                  href="https://pf.kakao.com/_texjAX/chat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 block text-sm font-medium text-slate-800 hover:text-blue-600 transition"
+                >
+                  채널 바로가기
+                </a>
               </div>
 
               {/* 주소 */}
               <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100">
-                  <MapPin className="h-4 w-4 text-slate-400" aria-hidden />
+                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50">
+                  <MapPin className="h-4 w-4 text-blue-600" aria-hidden />
                 </div>
                 <p className="mt-3 text-xs font-semibold text-slate-500">주소</p>
-                {/* TODO: 주소 확정 후 업데이트 */}
-                <p className="mt-1 text-sm text-slate-400">준비중</p>
+                <p className="mt-1 text-sm font-medium text-slate-800 leading-relaxed">
+                  경기도 구리시<br />이문안로 138 2층
+                </p>
               </div>
             </div>
 

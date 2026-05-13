@@ -53,12 +53,24 @@ export function Footer() {
                   hichoi333@naver.com
                 </a>
               </li>
-              {/* TODO: 전화번호 확정 후 아래 주석 해제 및 번호 업데이트 */}
-              <li>전화: 준비중</li>
-              {/* TODO: 카카오톡 채널 링크 확정 후 아래 주석 해제 */}
-              <li>카카오톡: 준비중</li>
-              {/* TODO: 주소 확정 후 아래 주석 해제 */}
-              <li>주소: 준비중</li>
+              <li>
+                전화:{" "}
+                <a href="tel:031-523-2340" className="hover:text-blue-600 transition">
+                  031-523-2340
+                </a>
+              </li>
+              <li>
+                카카오톡:{" "}
+                <a
+                  href="https://pf.kakao.com/_texjAX/chat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  채널 바로가기
+                </a>
+              </li>
+              <li>주소: 경기도 구리시 이문안로 138 2층</li>
             </ul>
           </div>
         </div>

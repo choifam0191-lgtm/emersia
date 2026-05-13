@@ -112,22 +112,23 @@ export function Header() {
               >
                 견적문의
               </Link>
-              {/* TODO: 전화번호 확정 후 href="tel:XXXXXXXX" 및 번호 표시 업데이트 */}
               <a
-                href="#"
-                aria-disabled="true"
-                className="flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-400"
+                href="tel:031-523-2340"
+                className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                onClick={() => setOpen(false)}
               >
                 <Phone className="h-4 w-4" />
-                전화문의 (준비중)
+                031-523-2340
               </a>
-              {/* TODO: 카카오톡 채널 링크 확정 후 href 연결 */}
               <a
-                href="#"
-                aria-disabled="true"
-                className="flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-400"
+                href="https://pf.kakao.com/_texjAX/chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-xl border border-yellow-300 px-4 py-3 text-sm font-semibold text-yellow-800 transition hover:bg-yellow-50"
+                style={{ backgroundColor: "#FFFBEB" }}
+                onClick={() => setOpen(false)}
               >
-                카카오톡 상담 (준비중)
+                카카오톡 상담
               </a>
             </div>
           </nav>
