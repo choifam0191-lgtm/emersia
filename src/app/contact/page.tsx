@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, Phone } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "문의 | 무료 방문시연 및 견적 문의",
@@ -15,6 +16,7 @@ export default async function ContactPage({
 }) {
   const params = await searchParams;
   const type = params?.type;
+  const { contact } = getContent();
 
   return (
     <main>
@@ -64,19 +66,19 @@ export default async function ContactPage({
                   <div className="flex items-start gap-3">
                     <Mail className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
                     <a
-                      href="mailto:hichoi333@naver.com"
+                      href={`mailto:${contact.email}`}
                       className="text-sm text-slate-700 transition hover:text-blue-600"
                     >
-                      hichoi333@naver.com
+                      {contact.email}
                     </a>
                   </div>
                   <div className="flex items-start gap-3">
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
                     <a
-                      href="tel:031-523-2340"
+                      href={`tel:${contact.phone}`}
                       className="text-sm text-slate-700 transition hover:text-blue-600"
                     >
-                      031-523-2340
+                      {contact.phone}
                     </a>
                   </div>
                   <div className="flex items-start gap-3">
@@ -89,7 +91,7 @@ export default async function ContactPage({
                       </svg>
                     </span>
                     <a
-                      href="https://pf.kakao.com/_texjAX/chat"
+                      href={contact.kakao}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-slate-700 transition hover:text-blue-600"

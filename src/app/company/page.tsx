@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CompanyContent } from "@/components/CompanyContent";
 import { CTASection } from "@/components/CTASection";
+import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "회사소개 | 영우테크",
@@ -9,9 +10,11 @@ export const metadata: Metadata = {
 };
 
 export default function CompanyPage() {
+  const { company, contact } = getContent();
+
   return (
     <main>
-      <CompanyContent />
+      <CompanyContent data={company} contact={contact} />
       <CTASection />
     </main>
   );

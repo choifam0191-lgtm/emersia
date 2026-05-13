@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getContent } from "@/lib/content";
 
 const siteLinks = [
   { label: "홈", href: "/" },
@@ -9,6 +10,8 @@ const siteLinks = [
 ];
 
 export function Footer() {
+  const { contact } = getContent();
+
   return (
     <footer className="border-t border-slate-200/60 bg-white">
       <div className="mx-auto max-w-6xl px-5 py-12">
@@ -46,23 +49,20 @@ export function Footer() {
             <ul className="mt-3 space-y-2 text-sm text-slate-600">
               <li>
                 이메일:{" "}
-                <a
-                  href="mailto:hichoi333@naver.com"
-                  className="text-blue-600 hover:underline"
-                >
-                  hichoi333@naver.com
+                <a href={`mailto:${contact.email}`} className="text-blue-600 hover:underline">
+                  {contact.email}
                 </a>
               </li>
               <li>
                 전화:{" "}
-                <a href="tel:031-523-2340" className="hover:text-blue-600 transition">
-                  031-523-2340
+                <a href={`tel:${contact.phone}`} className="transition hover:text-blue-600">
+                  {contact.phone}
                 </a>
               </li>
               <li>
                 카카오톡:{" "}
                 <a
-                  href="https://pf.kakao.com/_texjAX/chat"
+                  href={contact.kakao}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline"
@@ -70,7 +70,7 @@ export function Footer() {
                   채널 바로가기
                 </a>
               </li>
-              <li>주소: 경기도 구리시 이문안로 138 2층</li>
+              <li>주소: {contact.address}</li>
             </ul>
           </div>
         </div>

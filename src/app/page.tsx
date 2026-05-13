@@ -5,6 +5,7 @@ import { SolutionSection } from "@/components/SolutionSection";
 import { ApplicationSection } from "@/components/ApplicationSection";
 import { ProcessSection } from "@/components/ProcessSection";
 import { CTASection } from "@/components/CTASection";
+import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "스마트 LTE 방송시스템 | 건설현장 안전방송 솔루션",
@@ -13,19 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const { home } = getContent();
+
   return (
     <main>
-      {/* 1. 히어로 */}
-      <HeroSection />
-      {/* 2. 문제점 */}
-      <ProblemSection />
-      {/* 3. 우리의 솔루션 */}
-      <SolutionSection />
-      {/* 4. 적용 현장 */}
-      <ApplicationSection />
-      {/* 5. 도입 절차 */}
-      <ProcessSection />
-      {/* 6. 최종 CTA */}
+      <HeroSection data={home.hero} />
+      <ProblemSection data={home.problem} />
+      <SolutionSection data={home.solution} />
+      <ApplicationSection data={home.application} />
+      <ProcessSection data={home.process} />
       <CTASection />
     </main>
   );

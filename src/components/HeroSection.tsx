@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
 import { MotionInView } from "@/components/MotionInView";
+import type { HeroData } from "@/lib/content";
 
-export function HeroSection() {
+type Props = { data: HeroData };
+
+export function HeroSection({ data }: Props) {
   return (
     <section className="bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:flex-row md:items-center md:justify-between md:gap-16 md:py-28">
@@ -12,22 +15,19 @@ export function HeroSection() {
         <div className="md:max-w-[560px]">
           <MotionInView delay={0.04}>
             <span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-              스마트 LTE 방송시스템
+              {data.eyebrow}
             </span>
           </MotionInView>
 
           <MotionInView delay={0.08}>
             <h1 className="mt-4 text-balance text-3xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-[2.4rem] md:leading-snug">
-              건설현장 안전방송,
-              <br className="hidden md:block" /> LTE로 빠르게 구축하십시오
+              {data.headline}
             </h1>
           </MotionInView>
 
           <MotionInView delay={0.12}>
             <p className="mt-5 text-base leading-relaxed text-slate-600 md:text-lg">
-              유선 공사 부담 없이 상황실에서 현장 방송장비를 원격 운영하고,
-              혹서기 안내·비상대피·외국인 근로자 다국어 안내·작업 공지 방송을
-              신속하게 전달합니다.
+              {data.subtext}
             </p>
           </MotionInView>
 
@@ -59,8 +59,7 @@ export function HeroSection() {
 
           <MotionInView delay={0.2}>
             <p className="mt-6 text-sm leading-relaxed text-slate-500">
-              무전기·통신 솔루션 현장 경험을 바탕으로 장비 구성, 설치,
-              사용 교육, 운영 지원까지 함께 제공합니다.
+              {data.supportText}
             </p>
           </MotionInView>
         </div>
