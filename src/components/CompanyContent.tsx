@@ -31,8 +31,21 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
                   <p key={i}>{p}</p>
                 ))}
               </div>
-              {/* 이미지 영역 - 추후 추가 */}
-              <div className="hidden md:block" />
+              {/* 우측 이미지 영역 */}
+              <div className="hidden md:flex md:items-center">
+                {data.heroImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={data.heroImage}
+                    alt="영우테크"
+                    className="w-full rounded-2xl object-cover shadow-lg aspect-[4/3]"
+                  />
+                ) : (
+                  <div className="flex w-full aspect-[4/3] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                    <p className="text-sm text-slate-500">이미지 준비중</p>
+                  </div>
+                )}
+              </div>
             </div>
           </MotionInView>
         </div>

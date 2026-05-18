@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ResourcesFilterSection } from "@/components/ResourcesFilterSection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { CTASection } from "@/components/CTASection";
-import { getContent } from "@/lib/content";
+import { getContent, getFaqItems } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "자료실 | 스마트 LTE 방송시스템 카탈로그 및 제안자료",
@@ -11,7 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function ResourcesPage() {
-  const { resources, faq } = getContent();
+  const { resources } = getContent();
+  const faq = getFaqItems();
 
   return (
     <main>

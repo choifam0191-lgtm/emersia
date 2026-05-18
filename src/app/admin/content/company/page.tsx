@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
-import { Check, Loader2, Plus, Trash2 } from "lucide-react";
+import { Check, ImagePlus, Loader2, Plus, Trash2, X } from "lucide-react";
 
 type ContactData = { email: string; phone: string; address: string; kakao: string };
 type CompanyHero = { eyebrow: string; headline: string; paragraphs: string[] };
 type CompanyClients = { eyebrow: string; title: string; note: string };
-type CompanyData = { hero: CompanyHero; clients: CompanyClients };
+type CompanyData = { heroImage?: string | null; hero: CompanyHero; clients: CompanyClients };
 
 function Field({
   label,
@@ -78,6 +78,111 @@ function SectionCard({
   );
 }
 
+function HeroImageCard({
+  initial,
+}: {
+  initial: string | null | undefined;
+}) {
+  const [current, setCurrent] = useState<string | null>(initial ?? null);
+  const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function handleUpload(file: File) {
+    setUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch("/api/admin/company-image", { method: "POST", body: fd });
+    const data = await res.json();
+    if (data.ok) {
+      setCurrent(data.path + "?t=" + Date.now());
+      setPreview(null);
+    }
+    setUploading(false);
+  }
+
+  async function handleDelete() {
+    if (!confirm("대표 이미지를 삭제할까요?")) return;
+    setDeleting(true);
+    await fetch("/api/admin/company-image", { method: "DELETE" });
+    setCurrent(null);
+    setDeleting(false);
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    handleUpload(file);
+  }
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h2 className="mb-5 text-base font-bold text-slate-900">회사소개 대표 이미지</h2>
+      <p className="mb-4 text-xs text-slate-500">
+        회사소개 Hero 섹션 우측에 표시됩니다. JPEG / PNG / WEBP, 10MB 이하.
+      </p>
+
+      {current ? (
+        <div className="relative w-full max-w-sm">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={current}
+            alt="대표 이미지"
+            className="w-full rounded-xl object-cover aspect-[4/3] border border-slate-200"
+          />
+          <button
+            onClick={handleDelete}
+            disabled={deleting}
+            className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-red-600"
+          >
+            {deleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
+          </button>
+        </div>
+      ) : (
+        <div
+          className="flex w-full max-w-sm cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 py-10 transition hover:border-blue-400"
+          onClick={() => fileRef.current?.click()}
+        >
+          {uploading ? (
+            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          ) : preview ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={preview} alt="미리보기" className="h-24 w-auto rounded-lg object-cover" />
+          ) : (
+            <>
+              <ImagePlus className="h-8 w-8 text-slate-300" />
+              <p className="text-sm text-slate-400">클릭하여 이미지 업로드</p>
+            </>
+          )}
+        </div>
+      )}
+
+      {!current && (
+        <button
+          onClick={() => fileRef.current?.click()}
+          disabled={uploading}
+          className="mt-3 flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60"
+        >
+          {uploading && <Loader2 className="h-4 w-4 animate-spin" />}
+          <ImagePlus className="h-4 w-4" />
+          이미지 업로드
+        </button>
+      )}
+
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+    </div>
+  );
+}
+
 export default function CompanyEditorPage() {
   const [company, setCompany] = useState<CompanyData | null>(null);
   const [contact, setContact] = useState<ContactData | null>(null);
@@ -123,6 +228,9 @@ export default function CompanyEditorPage() {
     <div className="min-h-screen bg-slate-50">
       <AdminHeader title="회사소개 편집" />
       <main className="mx-auto max-w-3xl space-y-6 px-6 py-10">
+
+        {/* 대표 이미지 */}
+        <HeroImageCard initial={company.heroImage} />
 
         {/* 연락처 */}
         <SectionCard

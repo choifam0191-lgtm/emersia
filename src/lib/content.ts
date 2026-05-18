@@ -80,6 +80,7 @@ export type CompanyClientsData = {
 };
 
 export type CompanyData = {
+  heroImage?: string | null;
   hero: CompanyHeroData;
   clients: CompanyClientsData;
 };
@@ -91,6 +92,12 @@ export type CtaData = {
 };
 
 export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+export type FaqItemWithId = {
+  id: string;
   question: string;
   answer: string;
 };
@@ -133,4 +140,14 @@ export const getContent = cache((): SiteContent => {
   const filePath = path.join(process.cwd(), "src", "data", "content.json");
   const raw = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(raw) as SiteContent;
+});
+
+export const getFaqItems = cache((): FaqItemWithId[] => {
+  noStore();
+  const filePath = path.join(process.cwd(), "src", "data", "faq.json");
+  try {
+    return (JSON.parse(fs.readFileSync(filePath, "utf-8")).items as FaqItemWithId[]) ?? [];
+  } catch {
+    return [];
+  }
 });
