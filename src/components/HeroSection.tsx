@@ -10,9 +10,9 @@ type Props = { data: HeroData };
 export function HeroSection({ data }: Props) {
   return (
     <section className="bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:flex-row md:items-center md:justify-between md:gap-16 md:py-28">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 py-20 md:flex-row md:items-center md:justify-between md:gap-8 md:py-28">
         {/* 텍스트 */}
-        <div className="md:max-w-[560px]">
+        <div className="md:max-w-[660px]">
           <MotionInView delay={0.04}>
             <span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
               {data.eyebrow}
@@ -20,7 +20,7 @@ export function HeroSection({ data }: Props) {
           </MotionInView>
 
           <MotionInView delay={0.08}>
-            <h1 className="mt-4 text-balance text-3xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-[2.4rem] md:leading-snug">
+            <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-[2.4rem] md:leading-snug">
               {data.headline}
             </h1>
           </MotionInView>
@@ -66,7 +66,7 @@ export function HeroSection({ data }: Props) {
 
         {/* 이미지 */}
         <MotionInView
-          className="relative mx-auto w-full max-w-[480px] md:mx-0 md:shrink-0"
+          className="relative mx-auto w-full max-w-[420px] md:mx-0 md:shrink-0"
           delay={0.06}
         >
           <img

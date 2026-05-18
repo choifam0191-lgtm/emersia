@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ArrowRight, Menu, Phone, X } from "lucide-react";
 
 const navLinks = [
+  { label: "홈", href: "/" },
   { label: "회사소개", href: "/company" },
   { label: "자료실", href: "/resources" },
   { label: "설치사례", href: "/cases" },

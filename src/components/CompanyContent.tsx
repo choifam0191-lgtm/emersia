@@ -18,15 +18,19 @@ export function CompanyContent({ data, contact }: Props) {
         <div className="mx-auto max-w-6xl px-5">
           <MotionInView>
             <p className="text-sm font-semibold text-blue-400">{data.hero.eyebrow}</p>
-            <h1 className="mt-3 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl md:leading-snug">
+            <h1 className="mt-3 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl md:leading-snug">
               {data.hero.headline}
             </h1>
           </MotionInView>
           <MotionInView delay={0.08}>
-            <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
-              {data.hero.paragraphs.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+            <div className="mt-8 grid gap-10 md:grid-cols-[1fr_320px]">
+              <div className="space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
+                {data.hero.paragraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+              {/* 이미지 영역 - 추후 추가 */}
+              <div className="hidden md:block" />
             </div>
           </MotionInView>
         </div>
@@ -50,7 +54,7 @@ export function CompanyContent({ data, contact }: Props) {
             />
           </MotionInView>
           <MotionInView delay={0.12}>
-            <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed text-slate-500">
+            <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-relaxed text-slate-500">
               {data.clients.note}
             </p>
           </MotionInView>

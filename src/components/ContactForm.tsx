@@ -4,11 +4,11 @@ import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 type Status = "idle" | "loading" | "success" | "error";
-type InquiryType = "무료 방문시연" | "견적문의" | "카탈로그 요청" | "상담 요청";
+type InquiryType = "무료 방문시연" | "견적문의" | "상담 요청";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const INQUIRY_TYPES: InquiryType[] = ["무료 방문시연", "견적문의", "카탈로그 요청", "상담 요청"];
+const INQUIRY_TYPES: InquiryType[] = ["무료 방문시연", "견적문의", "상담 요청"];
 
 const PURPOSE_OPTIONS = [
   "혹서기 안전방송",
@@ -22,7 +22,6 @@ const PURPOSE_OPTIONS = [
 function resolveInitialType(type?: string): InquiryType {
   if (type === "demo") return "무료 방문시연";
   if (type === "quote") return "견적문의";
-  if (type === "catalog") return "카탈로그 요청";
   return "상담 요청";
 }
 
