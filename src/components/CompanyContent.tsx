@@ -3,6 +3,7 @@
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { MotionInView } from "@/components/MotionInView";
 import { SectionTitle } from "@/components/SectionTitle";
+import { KakaoMap } from "@/components/KakaoMap";
 import type { CompanyData, ContactInfo } from "@/lib/content";
 
 type Props = {
@@ -128,11 +129,7 @@ export function CompanyContent({ data, contact }: Props) {
               </div>
             </div>
 
-            {/* 지도 */}
-            <div className="mt-4 flex h-52 items-center justify-center rounded-2xl border border-slate-200/60 bg-slate-50">
-              {/* TODO: 카카오맵 또는 네이버지도 iframe 삽입 */}
-              <p className="text-sm text-slate-400">지도 준비중</p>
-            </div>
+            <KakaoMap address={contact.address} title="영우테크" />
           </MotionInView>
         </div>
       </section>
