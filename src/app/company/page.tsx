@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CompanyContent } from "@/components/CompanyContent";
 import { CTASection } from "@/components/CTASection";
+import { PartnerLogoSlider } from "@/components/PartnerLogoSlider";
 import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -14,7 +15,11 @@ export default function CompanyPage() {
 
   return (
     <main>
-      <CompanyContent data={company} contact={contact} />
+      <CompanyContent
+        data={company}
+        contact={contact}
+        partnerSlider={<PartnerLogoSlider />}
+      />
       <CTASection />
     </main>
   );

@@ -9,9 +9,10 @@ import type { CompanyData, ContactInfo } from "@/lib/content";
 type Props = {
   data: CompanyData;
   contact: ContactInfo;
+  partnerSlider?: React.ReactNode;
 };
 
-export function CompanyContent({ data, contact }: Props) {
+export function CompanyContent({ data, contact, partnerSlider }: Props) {
   return (
     <>
       {/* 1. Hero */}
@@ -48,11 +49,9 @@ export function CompanyContent({ data, contact }: Props) {
             />
           </MotionInView>
           <MotionInView delay={0.08}>
-            <img
-              src="/clients_all.png"
-              alt="영우테크 주요 거래처"
-              className="mx-auto mt-10 w-full max-w-3xl rounded-xl bg-white object-contain shadow-sm"
-            />
+            <div className="mt-10">
+              {partnerSlider}
+            </div>
           </MotionInView>
           <MotionInView delay={0.12}>
             <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-relaxed text-slate-500">

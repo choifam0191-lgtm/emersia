@@ -1,5 +1,5 @@
 import { LogoutButton } from "@/components/admin/LogoutButton";
-import { FileText, Building2, Images, HelpCircle, Mail, BookOpen } from "lucide-react";
+import { FileText, Building2, Images, HelpCircle, Mail, BookOpen, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
@@ -36,6 +36,13 @@ const sections = [
     description: "각 사례별 대표 이미지 및 갤러리 사진 업로드·삭제",
     icon: Images,
     href: "/admin/cases",
+    active: true,
+  },
+  {
+    title: "협력사 로고 관리",
+    description: "회사소개 페이지 협력사 슬라이더 로고 추가·삭제·순서 변경",
+    icon: LayoutGrid,
+    href: "/admin/partners",
     active: true,
   },
   {
