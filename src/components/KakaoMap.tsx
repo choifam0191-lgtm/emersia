@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Navigation } from "lucide-react";
 
 declare global {
   interface Window {
@@ -17,6 +18,7 @@ interface Props {
 export function KakaoMap({ address, title }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY;
+  const [coords, setCoords] = useState<{ lat: string; lng: string } | null>(null);
 
   useEffect(() => {
     if (!apiKey || !containerRef.current) return;
@@ -32,14 +34,18 @@ export function KakaoMap({ address, title }: Props) {
             console.warn("[KakaoMap] 주소 변환 실패:", address);
             return;
           }
-          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+          const lat = result[0].y;
+          const lng = result[0].x;
+          setCoords({ lat, lng });
+
+          const position = new window.kakao.maps.LatLng(lat, lng);
           const map = new window.kakao.maps.Map(containerRef.current, {
-            center: coords,
-            level: 3,
+            center: position,
+            level: 1,
           });
-          const marker = new window.kakao.maps.Marker({ map, position: coords });
+          const marker = new window.kakao.maps.Marker({ map, position });
           const infowindow = new window.kakao.maps.InfoWindow({
-            content: `<div style="padding:6px 12px;font-size:13px;font-weight:600;white-space:nowrap;">${title}</div>`,
+            content: `<div style="padding:8px 16px;text-align:center;font-size:14px;font-weight:600;white-space:nowrap;">${title}</div>`,
           });
           infowindow.open(map, marker);
           window.kakao.maps.event.addListener(marker, "click", () => {
@@ -49,13 +55,11 @@ export function KakaoMap({ address, title }: Props) {
       );
     }
 
-    // 이미 SDK가 로드된 경우 바로 초기화
     if (window.kakao?.maps) {
       initMap();
       return;
     }
 
-    // 중복 스크립트 방지
     if (document.getElementById("kakao-map-sdk")) return;
 
     const script = document.createElement("script");
@@ -65,6 +69,10 @@ export function KakaoMap({ address, title }: Props) {
     script.onerror = () => console.error("[KakaoMap] 스크립트 로드 실패. API 키와 허용 도메인을 확인하세요.");
     document.head.appendChild(script);
   }, [apiKey, address, title]);
+
+  const directionsUrl = coords
+    ? `https://map.kakao.com/link/to/${encodeURIComponent(title)},${coords.lat},${coords.lng}`
+    : `https://map.kakao.com/link/search/${encodeURIComponent(address)}`;
 
   if (!apiKey) {
     return (
@@ -78,9 +86,22 @@ export function KakaoMap({ address, title }: Props) {
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="mt-4 h-[400px] w-full overflow-hidden rounded-2xl border border-slate-200/60"
-    />
+    <div className="mt-4">
+      <div
+        ref={containerRef}
+        className="h-[400px] w-full overflow-hidden rounded-2xl border border-slate-200/60"
+      />
+      <div className="mt-2 flex justify-end">
+        <a
+          href={directionsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#FEE500] px-4 py-2.5 text-sm font-semibold text-[#3A1D1D] shadow-sm transition hover:brightness-95"
+        >
+          <Navigation className="h-4 w-4" />
+          길찾기
+        </a>
+      </div>
+    </div>
   );
 }

@@ -83,59 +83,59 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
           <MotionInView delay={0.08}>
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {/* 이메일 */}
-              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50">
-                  <Mail className="h-4 w-4 text-blue-600" aria-hidden />
+              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-6">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50">
+                  <Mail className="h-5 w-5 text-blue-600" aria-hidden />
                 </div>
-                <p className="mt-3 text-xs font-semibold text-slate-500">이메일</p>
+                <p className="mt-4 text-sm font-semibold text-slate-500">이메일</p>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="mt-1 block break-all text-sm font-medium text-blue-600 hover:underline"
+                  className="mt-1.5 block break-all text-base font-medium text-blue-600 hover:underline"
                 >
                   {contact.email}
                 </a>
               </div>
 
               {/* 전화 */}
-              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50">
-                  <Phone className="h-4 w-4 text-blue-600" aria-hidden />
+              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-6">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50">
+                  <Phone className="h-5 w-5 text-blue-600" aria-hidden />
                 </div>
-                <p className="mt-3 text-xs font-semibold text-slate-500">전화</p>
+                <p className="mt-4 text-sm font-semibold text-slate-500">전화</p>
                 <a
                   href={`tel:${contact.phone}`}
-                  className="mt-1 block text-sm font-medium text-slate-800 transition hover:text-blue-600"
+                  className="mt-1.5 block text-base font-medium text-slate-800 transition hover:text-blue-600"
                 >
                   {contact.phone}
                 </a>
               </div>
 
               {/* 카카오톡 */}
-              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
+              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-6">
                 <div
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-lg"
                   style={{ backgroundColor: "#FEE500" }}
                 >
-                  <MessageCircle className="h-4 w-4" style={{ color: "#3A1D1D" }} aria-hidden />
+                  <MessageCircle className="h-5 w-5" style={{ color: "#3A1D1D" }} aria-hidden />
                 </div>
-                <p className="mt-3 text-xs font-semibold text-slate-500">카카오톡</p>
+                <p className="mt-4 text-sm font-semibold text-slate-500">카카오톡</p>
                 <a
                   href={contact.kakao}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 block text-sm font-medium text-slate-800 transition hover:text-blue-600"
+                  className="mt-1.5 block text-base font-medium text-slate-800 transition hover:text-blue-600"
                 >
                   채널 바로가기
                 </a>
               </div>
 
               {/* 주소 */}
-              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-5">
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50">
-                  <MapPin className="h-4 w-4 text-blue-600" aria-hidden />
+              <div className="rounded-2xl border border-slate-200/60 bg-slate-50 p-6">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50">
+                  <MapPin className="h-5 w-5 text-blue-600" aria-hidden />
                 </div>
-                <p className="mt-3 text-xs font-semibold text-slate-500">주소</p>
-                <p className="mt-1 text-sm font-medium leading-relaxed text-slate-800">
+                <p className="mt-4 text-sm font-semibold text-slate-500">주소</p>
+                <p className="mt-1.5 text-base font-medium leading-relaxed text-slate-800">
                   {contact.address}
                 </p>
               </div>
