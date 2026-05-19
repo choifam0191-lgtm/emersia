@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import {
   Loader2,
@@ -10,27 +10,100 @@ import {
   Plus,
   ChevronUp,
   ChevronDown,
+  GripVertical,
 } from "lucide-react";
 import Image from "next/image";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  DragStartEvent,
+  DragOverlay,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type Partner = { id: string; name: string; logo: string };
 
-function PartnerCard({
+// ─── reorder API 호출 ────────────────────────────────────────────────────────
+
+async function saveOrder(partners: Partner[]): Promise<boolean> {
+  try {
+    const res = await fetch("/api/admin/partners/reorder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderedIds: partners.map((p) => p.id) }),
+    });
+    if (!res.ok) {
+      const d = await res.json();
+      console.error("[partners] 순서 저장 실패:", d.error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[partners] 순서 저장 오류:", err);
+    return false;
+  }
+}
+
+// ─── 드래그 오버레이용 카드 (드래그 중 떠다니는 복사본) ─────────────────────
+
+function DragCard({ partner }: { partner: Partner }) {
+  return (
+    <div className="flex items-center gap-4 rounded-2xl border border-blue-300 bg-white px-5 py-4 shadow-2xl ring-2 ring-blue-200 opacity-95">
+      <GripVertical className="h-5 w-5 flex-shrink-0 text-blue-400" />
+      <div className="flex h-14 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={partner.logo}
+          alt={partner.name}
+          className="max-h-12 max-w-[88px] object-contain"
+        />
+      </div>
+      <p className="flex-1 text-sm font-medium text-slate-800">{partner.name}</p>
+    </div>
+  );
+}
+
+// ─── 정렬 가능한 카드 ────────────────────────────────────────────────────────
+
+function SortablePartnerCard({
   partner,
   isFirst,
   isLast,
+  reordering,
   onDeleted,
-  onMoved,
+  onMoveUp,
+  onMoveDown,
 }: {
   partner: Partner;
   isFirst: boolean;
   isLast: boolean;
+  reordering: boolean;
   onDeleted: (id: string) => void;
-  onMoved: (id: string, direction: "up" | "down") => void;
+  onMoveUp: (id: string) => void;
+  onMoveDown: (id: string) => void;
 }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: partner.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.35 : 1,
+  };
+
   const [imgErr, setImgErr] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [moving, setMoving] = useState(false);
 
   async function handleDelete() {
     if (!confirm(`"${partner.name}" 로고를 삭제하시겠습니까?`)) return;
@@ -45,25 +118,26 @@ function PartnerCard({
     } else {
       const d = await res.json();
       alert(d.error ?? "삭제 실패");
+      setDeleting(false);
     }
-    setDeleting(false);
-  }
-
-  async function handleMove(direction: "up" | "down") {
-    setMoving(true);
-    const res = await fetch("/api/admin/partners", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: partner.id, direction }),
-    });
-    if (res.ok) {
-      onMoved(partner.id, direction);
-    }
-    setMoving(false);
   }
 
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm"
+    >
+      {/* 드래그 핸들 */}
+      <button
+        {...attributes}
+        {...listeners}
+        className="flex-shrink-0 cursor-grab touch-none rounded p-1 text-slate-300 transition hover:text-slate-500 active:cursor-grabbing"
+        aria-label="드래그하여 순서 변경"
+      >
+        <GripVertical className="h-5 w-5" />
+      </button>
+
       {/* 썸네일 */}
       <div className="flex h-14 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
         {imgErr ? (
@@ -81,23 +155,27 @@ function PartnerCard({
         )}
       </div>
 
-      {/* 이름 */}
-      <p className="flex-1 text-sm font-medium text-slate-800">{partner.name}</p>
-      <p className="text-xs text-slate-400 font-mono hidden sm:block">{partner.logo}</p>
+      {/* 이름 + 경로 */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        <p className="text-sm font-medium text-slate-800">{partner.name}</p>
+        <p className="truncate text-xs text-slate-400 font-mono">{partner.logo}</p>
+      </div>
 
-      {/* 순서 버튼 */}
+      {/* 화살표 버튼 */}
       <div className="flex flex-col gap-0.5">
         <button
-          onClick={() => handleMove("up")}
-          disabled={isFirst || moving}
-          className="flex h-6 w-6 items-center justify-center rounded text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30"
+          onClick={() => onMoveUp(partner.id)}
+          disabled={isFirst || reordering}
+          className="flex h-6 w-6 items-center justify-center rounded text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-25 disabled:cursor-not-allowed"
+          aria-label="위로"
         >
           <ChevronUp className="h-4 w-4" />
         </button>
         <button
-          onClick={() => handleMove("down")}
-          disabled={isLast || moving}
-          className="flex h-6 w-6 items-center justify-center rounded text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30"
+          onClick={() => onMoveDown(partner.id)}
+          disabled={isLast || reordering}
+          className="flex h-6 w-6 items-center justify-center rounded text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-25 disabled:cursor-not-allowed"
+          aria-label="아래로"
         >
           <ChevronDown className="h-4 w-4" />
         </button>
@@ -106,7 +184,7 @@ function PartnerCard({
       {/* 삭제 */}
       <button
         onClick={handleDelete}
-        disabled={deleting}
+        disabled={deleting || reordering}
         className="flex items-center gap-1 rounded-lg border border-red-100 px-2.5 py-1.5 text-xs text-red-400 transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
       >
         {deleting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
@@ -114,6 +192,8 @@ function PartnerCard({
     </div>
   );
 }
+
+// ─── 추가 폼 ─────────────────────────────────────────────────────────────────
 
 function AddPartnerForm({ onAdded }: { onAdded: (partner: Partner) => void }) {
   const [open, setOpen] = useState(false);
@@ -223,13 +303,7 @@ function AddPartnerForm({ onAdded }: { onAdded: (partner: Partner) => void }) {
             추가
           </button>
           <button
-            onClick={() => {
-              setOpen(false);
-              setName("");
-              setFile(null);
-              setPreview(null);
-              setError("");
-            }}
+            onClick={() => { setOpen(false); setName(""); setFile(null); setPreview(null); setError(""); }}
             className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 transition hover:bg-slate-100"
           >
             취소
@@ -240,31 +314,78 @@ function AddPartnerForm({ onAdded }: { onAdded: (partner: Partner) => void }) {
   );
 }
 
+// ─── 메인 페이지 ─────────────────────────────────────────────────────────────
+
 export default function AdminPartnersPage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [reordering, setReordering] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
-  function load() {
+  useEffect(() => {
     fetch("/api/admin/partners")
       .then((r) => r.json())
-      .then((d) => {
-        setPartners(d.partners ?? []);
-        setLoaded(true);
-      });
-  }
+      .then((d) => { setPartners(d.partners ?? []); setLoaded(true); });
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  // 낙관적 업데이트 후 API 저장, 실패 시 롤백
+  const applyReorder = useCallback(async (next: Partner[], prev: Partner[]) => {
+    setPartners(next);
+    setReordering(true);
+    const ok = await saveOrder(next);
+    if (!ok) {
+      console.error("[partners] 순서 저장 실패 — 원래 순서로 복원합니다.");
+      setPartners(prev);
+    }
+    setReordering(false);
+  }, []);
 
-  function handleMoved(id: string, direction: "up" | "down") {
+  function handleMoveUp(id: string) {
     setPartners((prev) => {
-      const arr = [...prev];
-      const idx = arr.findIndex((p) => p.id === id);
-      const newIdx = direction === "up" ? idx - 1 : idx + 1;
-      if (newIdx < 0 || newIdx >= arr.length) return prev;
-      [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
-      return arr;
+      const idx = prev.findIndex((p) => p.id === id);
+      if (idx <= 0) return prev;
+      const next = arrayMove(prev, idx, idx - 1);
+      applyReorder(next, prev);
+      return next;
     });
   }
+
+  function handleMoveDown(id: string) {
+    setPartners((prev) => {
+      const idx = prev.findIndex((p) => p.id === id);
+      if (idx < 0 || idx >= prev.length - 1) return prev;
+      const next = arrayMove(prev, idx, idx + 1);
+      applyReorder(next, prev);
+      return next;
+    });
+  }
+
+  // dnd-kit 센서 설정: PointerSensor는 8px 이동해야 드래그 시작 (클릭 오작동 방지)
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 5 } })
+  );
+
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(String(event.active.id));
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    setActiveId(null);
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    setPartners((prev) => {
+      const oldIdx = prev.findIndex((p) => p.id === active.id);
+      const newIdx = prev.findIndex((p) => p.id === over.id);
+      if (oldIdx === -1 || newIdx === -1) return prev;
+      const next = arrayMove(prev, oldIdx, newIdx);
+      applyReorder(next, prev);
+      return next;
+    });
+  }
+
+  const activePartner = partners.find((p) => p.id === activeId);
 
   if (!loaded) {
     return (
@@ -281,24 +402,52 @@ export default function AdminPartnersPage() {
     <div className="min-h-screen bg-slate-50">
       <AdminHeader title="협력사 로고 관리" />
       <main className="mx-auto max-w-3xl space-y-3 px-6 py-10">
-        <p className="text-sm text-slate-500 mb-6">
-          로고는 회사소개 페이지 협력사 섹션에서 좌→우 슬라이더로 표시됩니다.
-        </p>
+        <div className="mb-6 flex items-center justify-between">
+          <p className="text-sm text-slate-500">
+            로고는 회사소개 페이지 슬라이더로 표시됩니다. 드래그하거나 화살표로 순서를 변경하세요.
+          </p>
+          {reordering && (
+            <span className="flex items-center gap-1.5 text-xs text-slate-400">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" /> 저장 중
+            </span>
+          )}
+        </div>
+
         {partners.length === 0 && (
           <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-12">
             <p className="text-sm text-slate-400">등록된 협력사 로고가 없습니다.</p>
           </div>
         )}
-        {partners.map((p, i) => (
-          <PartnerCard
-            key={p.id}
-            partner={p}
-            isFirst={i === 0}
-            isLast={i === partners.length - 1}
-            onDeleted={(id) => setPartners((prev) => prev.filter((x) => x.id !== id))}
-            onMoved={handleMoved}
-          />
-        ))}
+
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={partners.map((p) => p.id)} strategy={verticalListSortingStrategy}>
+            <div className="space-y-3">
+              {partners.map((p, i) => (
+                <SortablePartnerCard
+                  key={p.id}
+                  partner={p}
+                  isFirst={i === 0}
+                  isLast={i === partners.length - 1}
+                  reordering={reordering}
+                  onDeleted={(id) => setPartners((prev) => prev.filter((x) => x.id !== id))}
+                  onMoveUp={handleMoveUp}
+                  onMoveDown={handleMoveDown}
+                />
+              ))}
+            </div>
+          </SortableContext>
+
+          {/* 드래그 중 떠다니는 복사본 */}
+          <DragOverlay>
+            {activePartner ? <DragCard partner={activePartner} /> : null}
+          </DragOverlay>
+        </DndContext>
+
         <AddPartnerForm onAdded={(p) => setPartners((prev) => [...prev, p])} />
       </main>
     </div>
