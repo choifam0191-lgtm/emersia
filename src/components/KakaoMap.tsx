@@ -45,7 +45,7 @@ export function KakaoMap({ address, title }: Props) {
           });
           const marker = new window.kakao.maps.Marker({ map, position });
           const infowindow = new window.kakao.maps.InfoWindow({
-            content: `<div style="padding:8px 16px;text-align:center;font-size:14px;font-weight:600;white-space:nowrap;">${title}</div>`,
+            content: `<div style="padding:8px 16px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;white-space:nowrap;min-width:80px;">${title}</div>`,
           });
           infowindow.open(map, marker);
           window.kakao.maps.event.addListener(marker, "click", () => {
