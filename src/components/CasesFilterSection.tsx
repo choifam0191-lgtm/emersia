@@ -7,17 +7,6 @@ import { CaseCard } from "@/components/CaseCard";
 import { getAllCases } from "@/lib/cases";
 import type { Case } from "@/lib/cases";
 
-const FILTERS = [
-  "전체",
-  "건설현장",
-  "공장·산업현장",
-  "공공시설",
-  "혹서기 대응",
-  "비상대피",
-  "다국어 안내",
-] as const;
-type Filter = (typeof FILTERS)[number];
-
 const cases = getAllCases();
 
 function DetailRow({ label, text }: { label: string; text: string }) {
@@ -66,46 +55,18 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export function CasesFilterSection() {
-  const [active, setActive] = useState<Filter>("전체");
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
-  const filtered =
-    active === "전체" ? cases : cases.filter((c) => c.tags.includes(active));
   const openCase: Case | undefined = cases.find((c) => c.slug === openSlug);
 
   return (
     <section className="border-t border-slate-200/50 bg-slate-50 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5">
-        {/* 필터 버튼 */}
-        <div className="flex flex-wrap gap-2">
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setActive(f)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                active === f
-                  ? "bg-blue-600 text-white shadow-sm"
-                  : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-
         {/* 사례 카드 그리드 */}
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {filtered.length > 0 ? (
-            filtered.map((c) => (
-              <CaseCard key={c.slug} item={c} onOpen={() => setOpenSlug(c.slug)} />
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center py-16 text-center sm:col-span-2">
-              <p className="text-sm text-slate-500">
-                해당 카테고리의 사례를 준비 중입니다.
-              </p>
-            </div>
-          )}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {cases.map((c) => (
+            <CaseCard key={c.slug} item={c} onOpen={() => setOpenSlug(c.slug)} />
+          ))}
         </div>
       </div>
 

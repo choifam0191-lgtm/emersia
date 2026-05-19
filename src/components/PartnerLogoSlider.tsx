@@ -57,15 +57,15 @@ export function PartnerLogoSlider() {
         {doubled.map((p, i) => (
           <div
             key={`${p.id}-${i}`}
-            className="mx-8 flex h-14 w-36 flex-shrink-0 items-center justify-center"
+            className="mx-4 flex h-20 w-44 flex-shrink-0 items-center justify-center"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={p.logo}
               alt={p.name}
-              className="max-h-12 max-w-[136px] object-contain"
-              width={136}
-              height={48}
+              className="max-h-20 max-w-[176px] object-contain"
+              width={176}
+              height={80}
             />
           </div>
         ))}
