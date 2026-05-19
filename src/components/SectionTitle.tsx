@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/Badge";
+
 type Props = {
   eyebrow?: string;
   title: string;
@@ -10,21 +12,23 @@ export function SectionTitle({ eyebrow, title, description, center = false, ligh
   return (
     <div className={center ? "text-center" : ""}>
       {eyebrow && (
-        <p className={`text-sm font-semibold ${light ? "text-blue-300" : "text-blue-600"}`}>
-          {eyebrow}
-        </p>
+        light ? (
+          <p className="text-sm font-semibold text-blue-300">{eyebrow}</p>
+        ) : (
+          <Badge variant="brand">{eyebrow}</Badge>
+        )
       )}
       <h2
-        className={`mt-2 text-3xl font-extrabold tracking-tight md:text-4xl ${
-          light ? "text-white" : "text-slate-900"
+        className={`mt-3 text-3xl font-extrabold tracking-tight md:text-heading-lg ${
+          light ? "text-white" : "text-ink-900"
         }`}
       >
         {title}
       </h2>
       {description && (
         <p
-          className={`mt-3 text-base leading-relaxed md:text-lg ${
-            light ? "text-slate-400" : "text-slate-600"
+          className={`mt-4 text-base leading-relaxed md:text-lg ${
+            light ? "text-slate-400" : "text-ink-600"
           }`}
         >
           {description}

@@ -16,7 +16,7 @@ export function FAQAccordion({ items }: Props) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200/60 bg-white">
+    <div className="divide-y divide-hairline rounded-2xl border border-hairline bg-surface">
       {items.map((item, idx) => (
         <div key={idx} className="px-6">
           <button
@@ -24,18 +24,18 @@ export function FAQAccordion({ items }: Props) {
             onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
             aria-expanded={openIdx === idx}
           >
-            <span className="pr-4 text-sm font-semibold text-slate-900 md:text-base">
+            <span className="pr-4 text-sm font-semibold text-ink-900 md:text-base">
               {item.question}
             </span>
             <ChevronDown
-              className={`h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 ${
+              className={`h-5 w-5 shrink-0 text-mist transition-transform duration-200 ${
                 openIdx === idx ? "rotate-180" : ""
               }`}
               aria-hidden
             />
           </button>
           {openIdx === idx && (
-            <p className="pb-5 text-sm leading-relaxed text-slate-600">
+            <p className="pb-5 text-sm leading-relaxed text-ink-600">
               {item.answer}
             </p>
           )}

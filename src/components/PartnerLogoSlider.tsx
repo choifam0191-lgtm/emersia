@@ -20,22 +20,19 @@ export function PartnerLogoSlider() {
 
   if (partners.length === 0) {
     return (
-      <div className="flex h-20 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/50">
-        <p className="text-sm text-slate-400">등록된 협력사가 없습니다.</p>
+      <div className="flex h-20 items-center justify-center rounded-xl border border-dashed border-hairline bg-muted/50">
+        <p className="text-sm text-mist">등록된 협력사가 없습니다.</p>
       </div>
     );
   }
 
-  // 무한 루프를 위해 2배 복제
   const doubled = [...partners, ...partners];
-  // 로고 1개당 약 6초 (최소 15초)
   const duration = Math.max(15, partners.length * 6);
 
   return (
     <div className="relative overflow-hidden">
-      {/* 좌우 페이드 마스크 */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-slate-50 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-slate-50 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-canvas to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-canvas to-transparent" />
 
       <style>{`
         @keyframes slide-partners {

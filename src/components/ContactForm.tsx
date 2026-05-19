@@ -2,6 +2,11 @@
 
 import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Select } from "@/components/ui/Select";
+import { Card } from "@/components/ui/Card";
 
 type Status = "idle" | "loading" | "success" | "error";
 type InquiryType = "무료 방문시연" | "견적문의" | "상담 요청";
@@ -24,6 +29,8 @@ function resolveInitialType(type?: string): InquiryType {
   if (type === "quote") return "견적문의";
   return "상담 요청";
 }
+
+const labelClass = "text-sm font-semibold text-ink-800";
 
 type Props = { initialType?: string };
 
@@ -85,26 +92,26 @@ export function ContactForm({ initialType }: Props) {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-200/60 bg-white p-8 text-center shadow-sm">
-        <CheckCircle className="h-10 w-10 text-blue-600" />
-        <p className="text-base font-bold text-slate-900">문의가 접수됐습니다!</p>
-        <p className="text-sm text-slate-600">빠른 시일 내로 연락드리겠습니다.</p>
+      <Card className="flex flex-col items-center gap-3 text-center">
+        <CheckCircle className="h-10 w-10 text-safety-blue" />
+        <p className="text-base font-bold text-ink-900">문의가 접수됐습니다!</p>
+        <p className="text-sm text-ink-600">빠른 시일 내로 연락드리겠습니다.</p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-2 text-sm font-medium text-blue-600 underline-offset-2 hover:underline"
+          className="mt-2 text-sm font-medium text-safety-blue underline-offset-2 hover:underline"
         >
           다시 문의하기
         </button>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm">
+    <Card>
       <form onSubmit={handleSubmit} className="grid gap-5">
         {/* 문의 유형 */}
         <div className="grid gap-2">
-          <span className="text-sm font-semibold text-slate-800">문의 유형</span>
+          <span className={labelClass}>문의 유형</span>
           <div className="flex flex-wrap gap-2">
             {INQUIRY_TYPES.map((t) => (
               <button
@@ -113,8 +120,8 @@ export function ContactForm({ initialType }: Props) {
                 onClick={() => setInquiryType(t)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                   inquiryType === t
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                    ? "bg-safety-blue text-white shadow-btn"
+                    : "border border-hairline bg-surface text-ink-600 hover:bg-muted"
                 }`}
               >
                 {t}
@@ -124,10 +131,9 @@ export function ContactForm({ initialType }: Props) {
         </div>
 
         {/* 회사명 */}
-        <label className="grid gap-2">
-          <span className="text-sm font-semibold text-slate-800">회사명</span>
-          <input
-            className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <label className="grid gap-1.5">
+          <span className={labelClass}>회사명</span>
+          <Input
             name="company"
             placeholder="(주)에머시아"
             required
@@ -137,67 +143,57 @@ export function ContactForm({ initialType }: Props) {
 
         {/* 담당자명 + 연락처 */}
         <div className="grid gap-4 sm:grid-cols-2">
-          <label className="grid gap-2">
-            <span className="text-sm font-semibold text-slate-800">담당자명</span>
-            <input
-              className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <label className="grid gap-1.5">
+            <span className={labelClass}>담당자명</span>
+            <Input
               name="name"
               placeholder="홍길동"
               required
               disabled={status === "loading"}
             />
           </label>
-          <label className="grid gap-2">
-            <span className="text-sm font-semibold text-slate-800">연락처</span>
-            <input
-              className={`h-12 rounded-xl border bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 ${
-                fieldErrors.phone
-                  ? "border-red-400 ring-2 ring-red-400"
-                  : "border-slate-200 focus:ring-blue-500"
-              }`}
+          <label className="grid gap-1.5">
+            <span className={labelClass}>연락처</span>
+            <Input
               name="phone"
               placeholder="01012345678"
               inputMode="numeric"
               maxLength={11}
               pattern="[0-9]{8,11}"
               required
+              error={!!fieldErrors.phone}
               onInput={handlePhoneInput}
               disabled={status === "loading"}
             />
             {fieldErrors.phone && (
-              <span className="text-xs text-red-500">{fieldErrors.phone}</span>
+              <span className="text-xs text-alert-red">{fieldErrors.phone}</span>
             )}
           </label>
         </div>
 
         {/* 이메일 */}
-        <label className="grid gap-2">
-          <span className="text-sm font-semibold text-slate-800">이메일</span>
-          <input
-            className={`h-12 rounded-xl border bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 ${
-              fieldErrors.email
-                ? "border-red-400 ring-2 ring-red-400"
-                : "border-slate-200 focus:ring-blue-500"
-            }`}
+        <label className="grid gap-1.5">
+          <span className={labelClass}>이메일</span>
+          <Input
             type="text"
             name="email"
             placeholder="name@company.com"
             required
+            error={!!fieldErrors.email}
             disabled={status === "loading"}
           />
           {fieldErrors.email && (
-            <span className="text-xs text-red-500">{fieldErrors.email}</span>
+            <span className="text-xs text-alert-red">{fieldErrors.email}</span>
           )}
         </label>
 
-        {/* 현장 위치 (선택) */}
-        <label className="grid gap-2">
-          <span className="text-sm font-semibold text-slate-800">
+        {/* 현장 위치 */}
+        <label className="grid gap-1.5">
+          <span className={labelClass}>
             현장 위치{" "}
-            <span className="font-normal text-slate-400">(선택)</span>
+            <span className="font-normal text-mist">(선택)</span>
           </span>
-          <input
-            className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <Input
             name="location"
             placeholder="예: 경기 수원시"
             disabled={status === "loading"}
@@ -205,48 +201,38 @@ export function ContactForm({ initialType }: Props) {
         </label>
 
         {/* 도입 목적 */}
-        <label className="grid gap-2">
-          <span className="text-sm font-semibold text-slate-800">도입 목적</span>
-          <select
-            className="h-12 rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-sm text-slate-900 transition-colors focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            name="purpose"
-            required
-            disabled={status === "loading"}
-            defaultValue=""
-          >
-            <option value="" disabled>
-              선택해주세요
-            </option>
+        <label className="grid gap-1.5">
+          <span className={labelClass}>도입 목적</span>
+          <Select name="purpose" required disabled={status === "loading"} defaultValue="">
+            <option value="" disabled>선택해주세요</option>
             {PURPOSE_OPTIONS.map((o) => (
-              <option key={o} value={o}>
-                {o}
-              </option>
+              <option key={o} value={o}>{o}</option>
             ))}
-          </select>
+          </Select>
         </label>
 
         {/* 문의 내용 */}
-        <label className="grid gap-2">
-          <span className="text-sm font-semibold text-slate-800">문의 내용</span>
-          <textarea
-            className="min-h-32 resize-y rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <label className="grid gap-1.5">
+          <span className={labelClass}>문의 내용</span>
+          <Textarea
             name="message"
             placeholder="필요하신 장비/수량/설치 환경 등을 간단히 적어주세요."
             required
             disabled={status === "loading"}
+            className="min-h-32"
           />
         </label>
 
         {status === "error" && (
-          <p className="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-600">
+          <p className="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-alert-red">
             {errorMsg}
           </p>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={status === "loading"}
-          className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-1 rounded-xl py-4"
         >
           {status === "loading" ? (
             <>
@@ -259,8 +245,8 @@ export function ContactForm({ initialType }: Props) {
               <ArrowRight className="h-4 w-4" />
             </>
           )}
-        </button>
+        </Button>
       </form>
-    </div>
+    </Card>
   );
 }

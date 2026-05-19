@@ -76,10 +76,10 @@ export function KakaoMap({ address, title }: Props) {
 
   if (!apiKey) {
     return (
-      <div className="mt-4 flex h-[400px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50">
+      <div className="mt-4 flex h-[400px] items-center justify-center rounded-2xl border border-dashed border-hairline bg-muted">
         <div className="text-center">
-          <p className="text-sm font-medium text-slate-500">지도 준비중</p>
-          <p className="mt-1 text-xs text-slate-400">NEXT_PUBLIC_KAKAO_MAP_KEY 설정 필요</p>
+          <p className="text-sm font-medium text-ink-500">지도 준비중</p>
+          <p className="mt-1 text-xs text-mist">NEXT_PUBLIC_KAKAO_MAP_KEY 설정 필요</p>
         </div>
       </div>
     );
@@ -89,7 +89,7 @@ export function KakaoMap({ address, title }: Props) {
     <div className="mt-4">
       <div
         ref={containerRef}
-        className="h-[400px] w-full overflow-hidden rounded-2xl border border-slate-200/60"
+        className="h-[400px] w-full overflow-hidden rounded-2xl border border-hairline/60"
       />
       <div className="mt-2 flex justify-end">
         <a
