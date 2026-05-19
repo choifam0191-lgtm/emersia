@@ -47,8 +47,8 @@ export function HeroSection({ data }: Props) {
                 견적 문의하기
               </Link>
               <a
-                href="/catalog/catalog-2026.pdf"
-                download="catalog-2026.pdf"
+                href="/api/catalog/download"
+                download="emersia-catalog.pdf"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
                 카탈로그 다운로드

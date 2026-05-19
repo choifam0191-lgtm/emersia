@@ -5,6 +5,7 @@ import { SolutionSection } from "@/components/SolutionSection";
 import { ApplicationSection } from "@/components/ApplicationSection";
 import { ProcessSection } from "@/components/ProcessSection";
 import { CTASection } from "@/components/CTASection";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function Page() {
 
   return (
     <main>
+      <PageViewTracker pagePath="/" />
       <HeroSection data={home.hero} />
       <ProblemSection data={home.problem} />
       <SolutionSection data={home.solution} />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ResourcesFilterSection } from "@/components/ResourcesFilterSection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { CTASection } from "@/components/CTASection";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { getContent, getFaqItems } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function ResourcesPage() {
 
   return (
     <main>
+      <PageViewTracker pagePath="/resources" />
       {/* Hero */}
       <section className="bg-slate-900 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-5">

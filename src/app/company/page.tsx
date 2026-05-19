@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CompanyContent } from "@/components/CompanyContent";
 import { CTASection } from "@/components/CTASection";
 import { PartnerLogoSlider } from "@/components/PartnerLogoSlider";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default function CompanyPage() {
 
   return (
     <main>
+      <PageViewTracker pagePath="/company" />
       <CompanyContent
         data={company}
         contact={contact}

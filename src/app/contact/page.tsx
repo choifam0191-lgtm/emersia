@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, Phone } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default async function ContactPage({
 
   return (
     <main>
+      <PageViewTracker pagePath="/contact" />
       {/* Hero */}
       <section className="bg-slate-900 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-5">

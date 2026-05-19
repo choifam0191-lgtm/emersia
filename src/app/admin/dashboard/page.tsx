@@ -1,5 +1,5 @@
 import { LogoutButton } from "@/components/admin/LogoutButton";
-import { FileText, Building2, Images, HelpCircle, Mail, BookOpen, LayoutGrid } from "lucide-react";
+import { FileText, Building2, Images, HelpCircle, Mail, BookOpen, LayoutGrid, BarChart2 } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
@@ -43,6 +43,13 @@ const sections = [
     description: "회사소개 페이지 협력사 슬라이더 로고 추가·삭제·순서 변경",
     icon: LayoutGrid,
     href: "/admin/partners",
+    active: true,
+  },
+  {
+    title: "사이트 통계",
+    description: "페이지 조회수·카탈로그 다운로드 수 확인 및 일별 차트",
+    icon: BarChart2,
+    href: "/admin/analytics",
     active: true,
   },
   {

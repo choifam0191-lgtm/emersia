@@ -9,8 +9,8 @@ const resources = [
     Icon: Download,
     title: "제품 카탈로그",
     desc: "제품 라인업, 스펙, 구성 예시를 한 번에 확인하세요.",
-    href: "/catalog/catalog-2026.pdf",
-    download: "catalog-2026.pdf",
+    href: "/api/catalog/download",
+    download: "emersia-catalog.pdf",
     ready: true,
   },
   {

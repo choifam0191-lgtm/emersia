@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CasesFilterSection } from "@/components/CasesFilterSection";
 import { CTASection } from "@/components/CTASection";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "설치사례 | 건설현장 LTE 안전방송 구성 사례",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function CasesPage() {
   return (
     <main>
+      <PageViewTracker pagePath="/cases" />
       {/* Hero */}
       <section className="bg-slate-900 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-5">
