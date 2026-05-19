@@ -1,3 +1,79 @@
 {
-  "partners": []
+  "partners": [
+    {
+      "id": "1779082247140",
+      "name": "1",
+      "logo": "/partners/partner-1779082247140.png"
+    },
+    {
+      "id": "1779082275697",
+      "name": "2",
+      "logo": "/partners/partner-1779082275697.png"
+    },
+    {
+      "id": "1779082280763",
+      "name": "3",
+      "logo": "/partners/partner-1779082280763.png"
+    },
+    {
+      "id": "1779082287599",
+      "name": "4",
+      "logo": "/partners/partner-1779082287599.png"
+    },
+    {
+      "id": "1779154882293",
+      "name": "5",
+      "logo": "/partners/partner-1779154882293.png"
+    },
+    {
+      "id": "1779082303285",
+      "name": "6",
+      "logo": "/partners/partner-1779082303285.png"
+    },
+    {
+      "id": "1779082309492",
+      "name": "7",
+      "logo": "/partners/partner-1779082309492.png"
+    },
+    {
+      "id": "1779082315687",
+      "name": "8",
+      "logo": "/partners/partner-1779082315687.png"
+    },
+    {
+      "id": "1779082323183",
+      "name": "9",
+      "logo": "/partners/partner-1779082323183.png"
+    },
+    {
+      "id": "1779082331335",
+      "name": "10",
+      "logo": "/partners/partner-1779082331335.png"
+    },
+    {
+      "id": "1779082337733",
+      "name": "11",
+      "logo": "/partners/partner-1779082337733.png"
+    },
+    {
+      "id": "1779154905393",
+      "name": "12",
+      "logo": "/partners/partner-1779154905393.png"
+    },
+    {
+      "id": "1779082350489",
+      "name": "13",
+      "logo": "/partners/partner-1779082350489.png"
+    },
+    {
+      "id": "1779082357010",
+      "name": "14",
+      "logo": "/partners/partner-1779082357010.png"
+    },
+    {
+      "id": "1779082363332",
+      "name": "15",
+      "logo": "/partners/partner-1779082363332.png"
+    }
+  ]
 }
