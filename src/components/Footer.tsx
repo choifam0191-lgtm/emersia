@@ -9,27 +9,76 @@ const siteLinks = [
   { label: "문의", href: "/contact" },
 ];
 
+const YT_LOGOS = [
+  { src: "/footer-logos/YT_3S_logo.png", alt: "3S Smart Safety System 로고" },
+  { src: "/footer-logos/YT_MAINBiz.png", alt: "메인비즈 인증 로고" },
+  { src: "/footer-logos/YT_KC.png", alt: "KC 인증 로고" },
+];
+
+const MP_LOGOS = [
+  { src: "/footer-logos/MP_ESG.png", alt: "한국ESG기업협회 로고" },
+  { src: "/footer-logos/MP_VEN.png", alt: "벤처기업 확인 로고" },
+];
+
+function CertLogo({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="rounded-sm bg-surface p-1.5">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} className="h-14 w-auto object-contain" />
+    </div>
+  );
+}
+
 export function Footer() {
   const { contact } = getContent();
 
   return (
     <footer className="border-t border-hairline/60 bg-canvas">
-      <div className="mx-auto max-w-6xl px-5 py-12">
-        <div className="grid gap-8 md:grid-cols-3">
-          {/* 브랜드 */}
+      <div className="mx-auto max-w-6xl px-5 py-12 md:py-16">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1.5fr]">
+
+          {/* ── 좌측: 영우테크 ── */}
           <div>
-            <p className="text-sm font-bold text-ink-900">emersia</p>
-            <p className="mt-1 text-xs text-mist">(주)영우테크</p>
-            <p className="mt-4 text-sm leading-relaxed text-ink-600">
+            {/* 브랜드 */}
+            <p className="text-base font-bold text-ink-900">emersia</p>
+            <p className="mt-0.5 text-xs text-mist">㈜영우테크</p>
+            <p className="mt-3 max-w-[280px] text-sm leading-relaxed text-ink-600">
               LTE 기반 스마트 안전방송 시스템으로
               <br />건설현장 안전을 지원합니다.
             </p>
+
+            <div className="my-5 border-t border-hairline/60" />
+
+            {/* 인증 로고 */}
+            <div className="flex flex-wrap items-center gap-2">
+              {YT_LOGOS.map((logo) => (
+                <CertLogo key={logo.src} {...logo} />
+              ))}
+              {/* ISO 9001 — PDF 원본이므로 placeholder 표시. PNG 변환 후 교체 요망 */}
+              <div className="flex h-14 w-14 items-center justify-center rounded-sm bg-surface p-1.5">
+                <span className="text-center text-[9px] font-semibold leading-tight text-mist">
+                  ISO
+                  <br />9001
+                </span>
+              </div>
+            </div>
+
+            {/* 라벨 */}
+            <p className="mt-3 text-xs font-semibold text-safety-blue">제조·공급</p>
+
+            {/* 사업자 정보 */}
+            <div className="mt-2 space-y-1">
+              <p className="text-sm font-semibold text-ink-900">㈜영우테크</p>
+              <p className="text-xs text-mist">대표: 최종임</p>
+              <p className="text-xs text-mist">사업자번호: 132-81-89811</p>
+              <p className="text-xs text-mist">통신판매업: 제 2011-경기구리-0315호</p>
+            </div>
           </div>
 
-          {/* 사이트맵 */}
+          {/* ── 중앙: 사이트맵 ── */}
           <div>
             <p className="text-sm font-semibold text-ink-900">사이트맵</p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-3 space-y-3">
               {siteLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -43,13 +92,17 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 연락처 */}
+          {/* ── 우측: 연락처 + 메디피아 ── */}
           <div>
+            {/* 연락처 */}
             <p className="text-sm font-semibold text-ink-900">연락처</p>
             <ul className="mt-3 space-y-2 text-sm text-ink-600">
               <li>
                 이메일:{" "}
-                <a href={`mailto:${contact.email}`} className="text-safety-blue hover:underline">
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="text-safety-blue hover:underline"
+                >
                   {contact.email}
                 </a>
               </li>
@@ -65,6 +118,7 @@ export function Footer() {
                   href={contact.kakao}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="카카오톡 채널 바로가기 (새 창으로 열림)"
                   className="text-safety-blue hover:underline"
                 >
                   채널 바로가기
@@ -72,17 +126,32 @@ export function Footer() {
               </li>
               <li>주소: {contact.address}</li>
             </ul>
+
+            <div className="my-5 border-t border-hairline/60" />
+
+            {/* 인증 로고 */}
+            <div className="flex flex-wrap items-center gap-2">
+              {MP_LOGOS.map((logo) => (
+                <CertLogo key={logo.src} {...logo} />
+              ))}
+            </div>
+
+            {/* 라벨 */}
+            <p className="mt-3 text-xs font-semibold text-safety-blue">판매</p>
+
+            {/* 사업자 정보 */}
+            <div className="mt-2 space-y-1">
+              <p className="text-sm font-semibold text-ink-900">메디피아(주)</p>
+              <p className="text-xs text-mist">대표: 최종임</p>
+              <p className="text-xs text-mist">사업자번호: 726-87-03153</p>
+            </div>
           </div>
         </div>
 
-        {/* 사업자 정보 */}
-        <div className="mt-10 border-t border-hairline/40 pt-8">
-          <div className="space-y-1 text-xs leading-relaxed text-mist">
-            <p>대표: 최종임 | 사업자등록번호: 132-81-89811</p>
-            <p>통신판매업 신고증 번호: 제 2011-경기구리-0315호</p>
-          </div>
-          <p className="mt-4 text-xs text-mist/70">
-            © {new Date().getFullYear()} (주)영우테크. All rights reserved.
+        {/* ── 카피라이트 바 ── */}
+        <div className="mt-10 border-t border-hairline/40 pt-6 text-center">
+          <p className="text-xs text-mist/70">
+            © {new Date().getFullYear()} ㈜영우테크. All rights reserved.
           </p>
         </div>
       </div>
