@@ -1,13 +1,4 @@
-import Link from "next/link";
 import { getContent } from "@/lib/content";
-
-const siteLinks = [
-  { label: "홈", href: "/" },
-  { label: "회사소개", href: "/company" },
-  { label: "자료실", href: "/resources" },
-  { label: "설치사례", href: "/cases" },
-  { label: "문의", href: "/contact" },
-];
 
 export function Footer() {
   const { contact } = getContent();
@@ -16,10 +7,10 @@ export function Footer() {
     <footer className="border-t border-hairline/60 bg-canvas">
       <div className="mx-auto max-w-6xl px-5 py-12 md:py-16">
 
-        {/* ── 상단 블록: 3열 ── */}
-        <div className="grid gap-8 md:gap-12 md:grid-cols-[1.5fr_1fr_1.5fr]">
+        {/* ── 상단 블록: 2열 ── */}
+        <div className="grid gap-8 md:grid-cols-2 md:gap-16">
 
-          {/* 좌측: 브랜드 */}
+          {/* 좌측: 브랜드 소개 */}
           <div>
             <div className="flex items-center gap-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,27 +22,10 @@ export function Footer() {
               <p className="text-base font-bold text-ink-900">emersia</p>
             </div>
             <p className="mt-1 text-xs text-mist">㈜영우테크</p>
-            <p className="mt-3 max-w-[280px] text-sm leading-relaxed text-ink-600">
+            <p className="mt-3 text-sm leading-relaxed text-ink-600">
               LTE 기반 스마트 안전방송 시스템으로
               <br />건설현장 안전을 지원합니다.
             </p>
-          </div>
-
-          {/* 중앙: 사이트맵 */}
-          <div>
-            <p className="text-sm font-bold text-ink-900">사이트맵</p>
-            <ul className="mt-3 space-y-3">
-              {siteLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-ink-600 transition hover:text-safety-blue"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* 우측: 연락처 */}
@@ -93,8 +67,8 @@ export function Footer() {
         {/* ── 전체 너비 구분선 ── */}
         <hr className="my-8 border-hairline/60" />
 
-        {/* ── 하단 블록: 좌(영우테크) + 우(메디피아), 중앙 비움 ── */}
-        <div className="grid gap-8 md:gap-12 md:grid-cols-[1.5fr_1fr_1.5fr]">
+        {/* ── 하단 블록: 2열 (영우테크 / 메디피아) ── */}
+        <div className="grid gap-8 md:grid-cols-2 md:gap-16">
 
           {/* 좌측 하단: 영우테크 인증 */}
           <div>
@@ -102,7 +76,7 @@ export function Footer() {
             <img
               src="/footer-logos/YT_logo.png"
               alt="영우테크 인증 로고 (KC, 메인비즈, ISO 9001, G-CERTi)"
-              className="h-12 w-auto object-contain py-1 md:h-14"
+              className="h-10 w-auto object-contain md:h-12"
             />
             <p className="mt-3 text-xs font-semibold text-safety-blue">제조·공급</p>
             <div className="mt-2 space-y-1">
@@ -113,16 +87,13 @@ export function Footer() {
             </div>
           </div>
 
-          {/* 중앙 하단: 비움 */}
-          <div className="hidden md:block" />
-
           {/* 우측 하단: 메디피아 인증 */}
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/footer-logos/MP_logo.png"
               alt="메디피아 인증 로고 (한국ESG기업협회, 벤처확인기업)"
-              className="h-12 w-auto object-contain py-1 md:h-14"
+              className="h-10 w-auto object-contain md:h-12"
             />
             <p className="mt-3 text-xs font-semibold text-safety-blue">판매</p>
             <div className="mt-2 space-y-1">
