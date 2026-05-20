@@ -13,6 +13,7 @@ const YT_LOGOS = [
   { src: "/footer-logos/YT_3S_logo.png", alt: "3S Smart Safety System 로고" },
   { src: "/footer-logos/YT_MAINBiz.png", alt: "메인비즈 인증 로고" },
   { src: "/footer-logos/YT_KC.png", alt: "KC 인증 로고" },
+  { src: "/footer-logos/YT_ISO.png", alt: "ISO 9001 인증 로고" },
 ];
 
 const MP_LOGOS = [
@@ -54,13 +55,6 @@ export function Footer() {
               {YT_LOGOS.map((logo) => (
                 <CertLogo key={logo.src} {...logo} />
               ))}
-              {/* ISO 9001 — PDF 원본이므로 placeholder 표시. PNG 변환 후 교체 요망 */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-sm bg-surface p-1.5">
-                <span className="text-center text-[9px] font-semibold leading-tight text-mist">
-                  ISO
-                  <br />9001
-                </span>
-              </div>
             </div>
 
             {/* 라벨 */}
