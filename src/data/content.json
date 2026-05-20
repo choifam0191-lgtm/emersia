@@ -173,9 +173,9 @@
         "title": "건설현장 적용 제안서",
         "description": "혹서기 안내, 비상대피, 외국인 근로자 안내방송 적용 예시를 정리한 자료입니다.",
         "buttonLabel": "다운로드",
-        "href": "#",
-        "download": null,
-        "ready": false
+        "href": "/api/proposal/download",
+        "download": "emersia-proposal.pdf",
+        "ready": true
       },
       {
         "category": "FAQ",

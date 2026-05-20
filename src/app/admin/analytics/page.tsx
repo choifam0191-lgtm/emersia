@@ -23,6 +23,7 @@ type DayStat = { date: string; count: number };
 type Analytics = {
   pageViews: Record<string, DayStat[]>;
   catalogDownloads: DayStat[];
+  proposalDownloads: DayStat[];
 };
 
 const PAGE_LABELS: Record<string, string> = {
@@ -64,9 +65,10 @@ function todayCount(arr: DayStat[]): number {
 function buildSeries(
   pageViews: Record<string, DayStat[]>,
   catalogDownloads: DayStat[],
+  proposalDownloads: DayStat[],
   days: number
-): { date: string; views: number; downloads: number }[] {
-  const result: { date: string; views: number; downloads: number }[] = [];
+): { date: string; views: number; catalog: number; proposal: number }[] {
+  const result: { date: string; views: number; catalog: number; proposal: number }[] = [];
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
@@ -75,8 +77,9 @@ function buildSeries(
     const views = Object.values(pageViews).reduce((acc, arr) => {
       return acc + (arr.find((x) => x.date === date)?.count ?? 0);
     }, 0);
-    const downloads = catalogDownloads.find((x) => x.date === date)?.count ?? 0;
-    result.push({ date: label, views, downloads });
+    const catalog = catalogDownloads.find((x) => x.date === date)?.count ?? 0;
+    const proposal = proposalDownloads.find((x) => x.date === date)?.count ?? 0;
+    result.push({ date: label, views, catalog, proposal });
   }
   return result;
 }
@@ -132,23 +135,26 @@ export default function AnalyticsPage() {
     const monthSet = datesBefore(30);
 
     const allViews: DayStat[] = Object.values(data.pageViews).flat();
+    const mergedViews = allViews.reduce((acc, d) => {
+      const ex = acc.find((x) => x.date === d.date);
+      if (ex) ex.count += d.count;
+      else acc.push({ ...d });
+      return acc;
+    }, [] as DayStat[]);
     return {
       totalViews: sumArr(allViews),
-      todayViews: todayCount(allViews.reduce((acc, d) => {
-        const ex = acc.find((x) => x.date === d.date);
-        if (ex) ex.count += d.count;
-        else acc.push({ ...d });
-        return acc;
-      }, [] as DayStat[])),
+      todayViews: todayCount(mergedViews),
       totalDownloads: sumArr(data.catalogDownloads),
       todayDownloads: todayCount(data.catalogDownloads),
+      totalProposalDownloads: sumArr(data.proposalDownloads),
+      todayProposalDownloads: todayCount(data.proposalDownloads),
       weekViews: sumArr(allViews, weekSet),
       monthViews: sumArr(allViews, monthSet),
     };
   }, [data, period]);
 
   const series = useMemo(
-    () => (data ? buildSeries(data.pageViews, data.catalogDownloads, period) : []),
+    () => (data ? buildSeries(data.pageViews, data.catalogDownloads, data.proposalDownloads ?? [], period) : []),
     [data, period]
   );
 
@@ -197,8 +203,8 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* 요약 카드 4개 */}
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {/* 요약 카드 */}
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
           <StatCard
             icon={Eye}
             label="전체 페이지 조회수"
@@ -214,6 +220,14 @@ export default function AnalyticsPage() {
             sub={stats.todayDownloads}
             subLabel="오늘"
             color="bg-emerald-500"
+          />
+          <StatCard
+            icon={Download}
+            label="제안서 다운로드"
+            total={stats.totalProposalDownloads}
+            sub={stats.todayProposalDownloads}
+            subLabel="오늘"
+            color="bg-amber-500"
           />
           <StatCard
             icon={Calendar}
@@ -277,7 +291,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* 차트 */}
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3">
           {/* 페이지 조회수 차트 */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-sm font-bold text-slate-900">
@@ -355,11 +369,55 @@ export default function AnalyticsPage() {
                 />
                 <Area
                   type="monotone"
-                  dataKey="downloads"
-                  name="다운로드"
+                  dataKey="catalog"
+                  name="카탈로그"
                   stroke="#10b981"
                   strokeWidth={2}
                   fill="url(#dlGrad)"
+                  dot={false}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* 제안서 다운로드 차트 */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="mb-4 text-sm font-bold text-slate-900">
+              일별 제안서 다운로드 <span className="font-normal text-slate-400">(최근 {period}일)</span>
+            </h2>
+            <ResponsiveContainer width="100%" height={200}>
+              <AreaChart data={series} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="propGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis
+                  dataKey="date"
+                  tick={{ fontSize: 10, fill: "#94a3b8" }}
+                  interval={period === 7 ? 0 : period === 30 ? 4 : 13}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  allowDecimals={false}
+                  tick={{ fontSize: 10, fill: "#94a3b8" }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <Tooltip
+                  contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #e2e8f0" }}
+                  labelStyle={{ fontWeight: 600 }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="proposal"
+                  name="제안서"
+                  stroke="#f59e0b"
+                  strokeWidth={2}
+                  fill="url(#propGrad)"
                   dot={false}
                 />
               </AreaChart>

@@ -1,10 +1,48 @@
 {
   "pageViews": {
-    "/": [],
-    "/company": [],
-    "/resources": [],
-    "/cases": [],
-    "/contact": []
+    "/": [
+      {
+        "date": "2026-05-19",
+        "count": 1
+      },
+      {
+        "date": "2026-05-20",
+        "count": 1
+      }
+    ],
+    "/company": [
+      {
+        "date": "2026-05-19",
+        "count": 2
+      },
+      {
+        "date": "2026-05-20",
+        "count": 2
+      }
+    ],
+    "/resources": [
+      {
+        "date": "2026-05-19",
+        "count": 1
+      },
+      {
+        "date": "2026-05-20",
+        "count": 1
+      }
+    ],
+    "/cases": [
+      {
+        "date": "2026-05-19",
+        "count": 1
+      }
+    ],
+    "/contact": [
+      {
+        "date": "2026-05-19",
+        "count": 1
+      }
+    ]
   },
-  "catalogDownloads": []
+  "catalogDownloads": [],
+  "proposalDownloads": []
 }

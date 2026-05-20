@@ -25,23 +25,23 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
             </h1>
           </MotionInView>
           <MotionInView delay={0.08}>
-            <div className="mt-8 grid gap-10 md:grid-cols-[1fr_320px]">
+            <div className="mt-8 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
               <div className="space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
                 {data.hero.paragraphs.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
               {/* 우측 이미지 영역 */}
-              <div className="hidden md:flex md:items-center">
+              <div className="flex">
                 {data.heroImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={data.heroImage}
                     alt="영우테크"
-                    className="w-full rounded-2xl object-cover shadow-lg aspect-[4/3]"
+                    className="w-full rounded-2xl object-cover shadow-lg aspect-[3/4]"
                   />
                 ) : (
-                  <div className="flex w-full aspect-[4/3] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                  <div className="flex w-full aspect-[3/4] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
                     <p className="text-sm text-slate-500">이미지 준비중</p>
                   </div>
                 )}
