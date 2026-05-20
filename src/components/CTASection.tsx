@@ -20,7 +20,7 @@ export function CTASection() {
             </span>
           ))}
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-400">
+        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-400 md:max-w-2xl">
           {cta.subtext}
         </p>
 
@@ -48,14 +48,26 @@ export function CTASection() {
           </a>
         </div>
 
-        <p className="mt-8 text-sm text-slate-500">
-          이메일:{" "}
-          <a
-            href={`mailto:${contact.email}`}
-            className="text-slate-400 transition hover:text-white"
-          >
-            {contact.email}
-          </a>
+        <p className="mt-8 flex flex-col items-center gap-2 text-sm text-slate-500 sm:flex-row sm:justify-center sm:gap-0">
+          <span>
+            이메일:{" "}
+            <a
+              href={`mailto:${contact.email}`}
+              className="text-slate-400 transition hover:text-white"
+            >
+              {contact.email}
+            </a>
+          </span>
+          <span className="hidden sm:mx-3 sm:inline">|</span>
+          <span>
+            전화:{" "}
+            <a
+              href={`tel:${contact.phone}`}
+              className="text-slate-400 transition hover:text-white"
+            >
+              {contact.phone}
+            </a>
+          </span>
         </p>
       </div>
     </section>

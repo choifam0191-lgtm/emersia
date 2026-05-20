@@ -45,7 +45,7 @@ export function SolutionSection({ data }: Props) {
                       {["상황실 장비", "LTE 통신망", "현장 방송장비", "작업자 / 현장"][idx]}
                     </p>
                     <p className="text-xs text-slate-500">
-                      {["방송 명령 송출", "원격 전달", "수신 및 재생", "안내 수신"][idx]}
+                      {["방송 명령 송출", "원격 전달", "송신 및 수신", "안내 수신"][idx]}
                     </p>
                   </div>
                   {idx < NODE_ICONS.length - 1 && (
@@ -78,7 +78,7 @@ export function SolutionSection({ data }: Props) {
                         {["상황실 장비", "LTE 통신망", "현장 방송장비", "작업자 / 현장"][idx]}
                       </p>
                       <p className="text-xs text-slate-500">
-                        {["방송 명령 송출", "원격 전달", "수신 및 재생", "안내 수신"][idx]}
+                        {["방송 명령 송출", "원격 전달", "송신 및 수신", "안내 수신"][idx]}
                       </p>
                     </div>
                   </div>

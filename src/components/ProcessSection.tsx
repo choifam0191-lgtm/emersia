@@ -47,7 +47,7 @@ export function ProcessSection({ data }: Props) {
                       aria-hidden
                     />
                     <p className="mt-2 text-sm font-bold text-slate-900">{step.title}</p>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{step.desc}</p>
+                    <p className="mt-1.5 break-keep text-xs leading-relaxed text-slate-500">{step.desc}</p>
                   </div>
                 </MotionInView>
               );

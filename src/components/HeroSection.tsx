@@ -20,7 +20,7 @@ export function HeroSection({ data }: Props) {
           </MotionInView>
 
           <MotionInView delay={0.08}>
-            <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-[2.4rem] md:leading-snug">
+            <h1 className="mt-4 break-keep text-3xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-[2.4rem] md:leading-snug">
               {data.headline}
             </h1>
           </MotionInView>
