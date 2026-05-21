@@ -38,8 +38,8 @@ export function Footer() {
             </p>
           </div>
 
-          {/* 중앙: 사이트맵 */}
-          <div>
+          {/* 중앙: 사이트맵 — 데스크탑에서 정중앙 정렬 */}
+          <div className="md:justify-self-center md:text-center">
             <p className="text-base font-semibold text-ink-900">사이트맵</p>
             <ul className="mt-3 space-y-3">
               {siteLinks.map(({ label, href }) => (
