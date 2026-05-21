@@ -8,7 +8,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-5 py-12 md:py-16">
 
         {/* ── 상단 블록: 2열 ── */}
-        <div className="grid gap-8 md:grid-cols-2 md:gap-16">
+        <div className="grid gap-8 md:grid-cols-2 md:items-start md:gap-16">
 
           {/* 좌측: 브랜드 소개 */}
           <div>
@@ -16,9 +16,10 @@ export function Footer() {
             <img
               src="/footer-logos/YT_3S_logo.png"
               alt="3S Smart Safety System 로고"
-              className="block h-8 w-auto object-contain object-left"
+              className="block h-9 w-auto object-contain object-left"
             />
-            <p className="mt-2 text-base font-bold text-ink-900">emersia</p>
+            {/* emersia — 가장 강한 시각 위계 */}
+            <p className="mt-3 text-xl font-bold text-ink-900">emersia</p>
             <p className="mt-0.5 text-xs text-mist">㈜영우테크</p>
             <p className="mt-3 text-sm leading-relaxed text-ink-600">
               LTE 기반 스마트 안전방송 시스템으로
@@ -26,9 +27,9 @@ export function Footer() {
             </p>
           </div>
 
-          {/* 우측: 연락처 — justify-self-end 로 오른쪽 끝 정렬 */}
+          {/* 우측: 연락처 — 오른쪽 끝 정렬 */}
           <div className="md:justify-self-end">
-            <p className="text-sm font-bold text-ink-900">연락처</p>
+            <p className="text-base font-semibold text-ink-900">연락처</p>
             <ul className="mt-3 space-y-2 text-sm text-ink-600">
               <li>
                 이메일:{" "}
@@ -66,7 +67,7 @@ export function Footer() {
         <hr className="my-8 border-hairline/60" />
 
         {/* ── 하단 블록: 2열 (영우테크 / 메디피아) ── */}
-        <div className="grid gap-8 md:grid-cols-2 md:gap-16">
+        <div className="grid gap-8 md:grid-cols-2 md:items-start md:gap-16">
 
           {/* 좌측 하단: 영우테크 인증 */}
           <div>
@@ -74,7 +75,7 @@ export function Footer() {
             <img
               src="/footer-logos/YT_logo.png"
               alt="영우테크 인증 로고 (KC, 메인비즈, ISO 9001, G-CERTi)"
-              className="block h-10 w-auto object-contain object-left md:h-12"
+              className="block h-[46px] w-auto object-contain object-left md:h-[55px]"
             />
             <p className="mt-3 text-xs font-semibold text-safety-blue">제조·공급</p>
             <div className="mt-2 space-y-1">
@@ -85,13 +86,13 @@ export function Footer() {
             </div>
           </div>
 
-          {/* 우측 하단: 메디피아 인증 — justify-self-end 로 오른쪽 끝 정렬 */}
+          {/* 우측 하단: 메디피아 인증 — 오른쪽 끝 정렬 */}
           <div className="md:justify-self-end">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/footer-logos/MP_logo.png"
               alt="메디피아 인증 로고 (한국ESG기업협회, 벤처확인기업)"
-              className="block h-10 w-auto object-contain object-left md:h-12"
+              className="block h-[46px] w-auto object-contain object-left md:h-[55px]"
             />
             <p className="mt-3 text-xs font-semibold text-safety-blue">판매</p>
             <div className="mt-2 space-y-1">
