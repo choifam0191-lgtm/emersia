@@ -12,24 +12,22 @@ export function Footer() {
 
           {/* 좌측: 브랜드 소개 */}
           <div>
-            <div className="flex items-center gap-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/footer-logos/YT_3S_logo.png"
-                alt="3S Smart Safety System 로고"
-                className="h-8 w-auto object-contain"
-              />
-              <p className="text-base font-bold text-ink-900">emersia</p>
-            </div>
-            <p className="mt-1 text-xs text-mist">㈜영우테크</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/footer-logos/YT_3S_logo.png"
+              alt="3S Smart Safety System 로고"
+              className="block h-8 w-auto object-contain object-left"
+            />
+            <p className="mt-2 text-base font-bold text-ink-900">emersia</p>
+            <p className="mt-0.5 text-xs text-mist">㈜영우테크</p>
             <p className="mt-3 text-sm leading-relaxed text-ink-600">
               LTE 기반 스마트 안전방송 시스템으로
               <br />건설현장 안전을 지원합니다.
             </p>
           </div>
 
-          {/* 우측: 연락처 */}
-          <div>
+          {/* 우측: 연락처 — justify-self-end 로 오른쪽 끝 정렬 */}
+          <div className="md:justify-self-end">
             <p className="text-sm font-bold text-ink-900">연락처</p>
             <ul className="mt-3 space-y-2 text-sm text-ink-600">
               <li>
@@ -76,7 +74,7 @@ export function Footer() {
             <img
               src="/footer-logos/YT_logo.png"
               alt="영우테크 인증 로고 (KC, 메인비즈, ISO 9001, G-CERTi)"
-              className="h-10 w-auto object-contain md:h-12"
+              className="block h-10 w-auto object-contain object-left md:h-12"
             />
             <p className="mt-3 text-xs font-semibold text-safety-blue">제조·공급</p>
             <div className="mt-2 space-y-1">
@@ -87,13 +85,13 @@ export function Footer() {
             </div>
           </div>
 
-          {/* 우측 하단: 메디피아 인증 */}
-          <div>
+          {/* 우측 하단: 메디피아 인증 — justify-self-end 로 오른쪽 끝 정렬 */}
+          <div className="md:justify-self-end">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/footer-logos/MP_logo.png"
               alt="메디피아 인증 로고 (한국ESG기업협회, 벤처확인기업)"
-              className="h-10 w-auto object-contain md:h-12"
+              className="block h-10 w-auto object-contain object-left md:h-12"
             />
             <p className="mt-3 text-xs font-semibold text-safety-blue">판매</p>
             <div className="mt-2 space-y-1">
