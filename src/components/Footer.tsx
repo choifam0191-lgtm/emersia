@@ -1,13 +1,4 @@
-import Link from "next/link";
 import { getContent } from "@/lib/content";
-
-const siteLinks = [
-  { label: "홈", href: "/" },
-  { label: "회사소개", href: "/company" },
-  { label: "자료실", href: "/resources" },
-  { label: "설치사례", href: "/cases" },
-  { label: "문의", href: "/contact" },
-];
 
 export function Footer() {
   const { contact } = getContent();
@@ -16,10 +7,10 @@ export function Footer() {
     <footer className="border-t border-hairline/60 bg-canvas">
       <div className="mx-auto max-w-6xl px-5 py-12 md:py-16">
 
-        {/* ── 상단 블록: 3열 (브랜드 / 사이트맵 / 연락처) ── */}
-        <div className="grid gap-8 md:grid-cols-3 md:items-start md:gap-12">
+        {/* ── 메인 2열: [좌: 브랜드+연락처] [우: 영우테크+메디피아] ── */}
+        <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:items-start md:gap-16">
 
-          {/* 좌측: 브랜드 소개 */}
+          {/* ── 좌측 묶음: 브랜드 + 연락처 ── */}
           <div>
             {/* 3S 로고 + emersia 한 줄 */}
             <div className="flex items-center gap-2">
@@ -36,28 +27,9 @@ export function Footer() {
               LTE 기반 스마트 안전방송 시스템으로
               <br />건설현장 안전을 지원합니다.
             </p>
-          </div>
 
-          {/* 중앙: 사이트맵 — 데스크탑에서 정중앙 정렬 */}
-          <div className="md:justify-self-center md:text-center">
-            <p className="text-base font-semibold text-ink-900">사이트맵</p>
-            <ul className="mt-3 space-y-3">
-              {siteLinks.map(({ label, href }) => (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className="text-sm text-mist transition hover:text-safety-blue"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* 우측: 연락처 — 오른쪽 끝 정렬 */}
-          <div className="md:justify-self-end">
-            <p className="text-base font-semibold text-ink-900">연락처</p>
+            {/* 연락처 */}
+            <p className="mt-8 text-base font-semibold text-ink-900">연락처</p>
             <ul className="mt-3 space-y-2 text-sm text-ink-600">
               <li>
                 이메일:{" "}
@@ -89,45 +61,44 @@ export function Footer() {
               <li>주소: {contact.address}</li>
             </ul>
           </div>
-        </div>
 
-        {/* ── 전체 너비 구분선 ── */}
-        <hr className="my-8 border-hairline/60" />
-
-        {/* ── 하단 블록: 2열 (영우테크 / 메디피아) ── */}
-        <div className="grid gap-8 md:grid-cols-2 md:items-start md:gap-16">
-
-          {/* 좌측: 영우테크 인증 */}
-          <div>
-            <p className="text-xs font-semibold text-safety-blue">제조·공급</p>
-            <div className="mt-2 space-y-1">
-              <p className="text-sm font-semibold text-ink-900">㈜영우테크</p>
-              <p className="text-xs text-mist">대표: 최종임</p>
-              <p className="text-xs text-mist">사업자번호: 132-81-89811</p>
-              <p className="text-xs text-mist">통신판매업: 제 2011-경기구리-0315호</p>
-            </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/footer-logos/YT_logo.png"
-              alt="영우테크 인증 로고 (KC, 메인비즈, ISO 9001, G-CERTi)"
-              className="mt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
-            />
-          </div>
-
-          {/* 우측: 메디피아 인증 — 오른쪽 끝 정렬 */}
+          {/* ── 우측 묶음: 영우테크 + 메디피아 (내부 2열, 오른쪽 끝 정렬) ── */}
           <div className="md:justify-self-end">
-            <p className="text-xs font-semibold text-safety-blue">판매</p>
-            <div className="mt-2 space-y-1">
-              <p className="text-sm font-semibold text-ink-900">메디피아(주)</p>
-              <p className="text-xs text-mist">대표: 최종임</p>
-              <p className="text-xs text-mist">사업자번호: 726-87-03153</p>
+            <div className="grid grid-cols-2 gap-8 md:gap-12">
+
+              {/* 영우테크 */}
+              <div>
+                <p className="text-xs font-semibold text-safety-blue">제조·공급</p>
+                <div className="mt-2 space-y-1">
+                  <p className="text-sm font-semibold text-ink-900">㈜영우테크</p>
+                  <p className="text-xs text-mist">대표: 최종임</p>
+                  <p className="text-xs text-mist">사업자번호: 132-81-89811</p>
+                  <p className="text-xs text-mist">통신판매업: 제 2011-경기구리-0315호</p>
+                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/footer-logos/YT_logo.png"
+                  alt="영우테크 인증 로고 (KC, 메인비즈, ISO 9001, G-CERTi)"
+                  className="mt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
+                />
+              </div>
+
+              {/* 메디피아 */}
+              <div>
+                <p className="text-xs font-semibold text-safety-blue">판매</p>
+                <div className="mt-2 space-y-1">
+                  <p className="text-sm font-semibold text-ink-900">메디피아(주)</p>
+                  <p className="text-xs text-mist">대표: 최종임</p>
+                  <p className="text-xs text-mist">사업자번호: 726-87-03153</p>
+                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/footer-logos/MP_logo.png"
+                  alt="메디피아 인증 로고 (한국ESG기업협회, 벤처확인기업)"
+                  className="mt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
+                />
+              </div>
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/footer-logos/MP_logo.png"
-              alt="메디피아 인증 로고 (한국ESG기업협회, 벤처확인기업)"
-              className="mt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
-            />
           </div>
         </div>
 
