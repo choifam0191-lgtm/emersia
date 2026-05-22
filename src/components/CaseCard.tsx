@@ -11,7 +11,7 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
 
   if (error) {
     return (
-      <div className="flex h-44 items-center justify-center bg-muted">
+      <div className="flex h-[202px] items-center justify-center bg-muted">
         <p className="text-xs text-mist">이미지 준비중</p>
       </div>
     );
@@ -21,7 +21,7 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="h-44 w-full object-cover"
+      className="h-[202px] w-full object-cover"
       onError={() => setError(true)}
     />
   );
