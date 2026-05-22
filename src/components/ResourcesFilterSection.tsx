@@ -5,7 +5,7 @@ import { getContent } from "@/lib/content";
 
 // PDF 파일 실존 여부를 서버사이드에서 확인 → 없으면 ready=false 로 덮어씀
 const PDF_PATHS: Record<string, string> = {
-  "/api/catalog/download": path.join(process.cwd(), "public", "catalog", "catalog-2026.pdf"),
+  "/api/catalog/download": path.join(process.cwd(), "public", "catalog.pdf"),
   "/api/proposal/download": path.join(process.cwd(), "public", "3S_propo.pdf"),
 };
 

@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const FILES: Record<string, string> = {
-  catalog: path.join(process.cwd(), "public", "catalog", "catalog-2026.pdf"),
+  catalog: path.join(process.cwd(), "public", "catalog.pdf"),
   proposal: path.join(process.cwd(), "public", "3S_propo.pdf"),
 };
 

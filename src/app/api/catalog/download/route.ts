@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const ANALYTICS_PATH = path.join(process.cwd(), "src", "data", "analytics.json");
-const PDF_PATH = path.join(process.cwd(), "public", "catalog", "catalog-2026.pdf");
+const PDF_PATH = path.join(process.cwd(), "public", "catalog.pdf");
 const BOT_RE = /bot|crawler|spider|crawling|slurp|mediapartners|facebookexternalhit|twitterbot|linkedinbot|pingdom|uptimerobot/i;
 
 type DayStat = { date: string; count: number };

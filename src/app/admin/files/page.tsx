@@ -8,7 +8,7 @@ type UploadState = "idle" | "uploading" | "success" | "error";
 type FileType = "catalog" | "proposal";
 
 const FILE_INFO: Record<FileType, { label: string; path: string }> = {
-  catalog: { label: "카탈로그", path: "public/catalog/catalog-2026.pdf" },
+  catalog: { label: "카탈로그", path: "public/catalog.pdf" },
   proposal: { label: "제안서", path: "public/3S_propo.pdf" },
 };
 
