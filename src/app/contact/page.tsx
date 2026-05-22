@@ -38,15 +38,15 @@ export default async function ContactPage({
       {/* 2-column: form + sidebar */}
       <section className="border-t border-slate-200/50 bg-slate-50 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-5">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_300px]">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
             {/* 폼 */}
             <ContactForm initialType={type} />
 
             {/* 사이드바 */}
             <aside className="space-y-5">
-              <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm">
+              <div className="rounded-2xl border border-slate-200/60 bg-white p-5 shadow-sm">
                 <p className="text-sm font-bold text-slate-900">문의 안내</p>
-                <ul className="mt-4 space-y-3 text-sm text-slate-600">
+                <ul className="mt-4 space-y-3 text-sm text-slate-600 break-keep">
                   <li className="flex gap-2.5">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
                     접수 후 영업일 기준 1~2일 내 연락드립니다.

@@ -25,7 +25,7 @@ export default function ResourcesPage() {
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white md:text-4xl">
             {resources.hero.headline}
           </h1>
-          <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-400 md:max-w-3xl md:text-lg">
             {resources.hero.subtext}
           </p>
         </div>
