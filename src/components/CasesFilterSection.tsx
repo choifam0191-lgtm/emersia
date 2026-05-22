@@ -23,7 +23,7 @@ function ModalImage({ src, alt }: { src: string; alt: string }) {
 
   if (error) {
     return (
-      <div className="flex h-56 items-center justify-center bg-slate-100">
+      <div className="flex h-[291px] items-center justify-center bg-slate-100">
         <p className="text-xs text-slate-400">이미지 준비중</p>
       </div>
     );
@@ -33,7 +33,7 @@ function ModalImage({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="h-56 w-full object-cover"
+      className="h-[291px] w-full object-cover"
       onError={() => setError(true)}
     />
   );

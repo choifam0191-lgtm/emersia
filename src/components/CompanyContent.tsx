@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { MotionInView } from "@/components/MotionInView";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -13,6 +14,30 @@ type Props = {
 };
 
 export function CompanyContent({ data, contact, partnerSlider }: Props) {
+  const textColRef = useRef<HTMLDivElement>(null);
+  const imgColRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function sync() {
+      if (!textColRef.current || !imgColRef.current) return;
+      if (window.innerWidth >= 768) {
+        imgColRef.current.style.maxHeight = textColRef.current.offsetHeight + "px";
+      } else {
+        imgColRef.current.style.maxHeight = "";
+      }
+    }
+
+    const ro = new ResizeObserver(sync);
+    if (textColRef.current) ro.observe(textColRef.current);
+    window.addEventListener("resize", sync);
+    sync();
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", sync);
+    };
+  }, []);
+
   return (
     <>
       {/* 1. Hero */}
@@ -26,22 +51,25 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
           </MotionInView>
           <MotionInView delay={0.08}>
             <div className="mt-8 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
-              <div className="space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
+              <div ref={textColRef} className="space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
                 {data.hero.paragraphs.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
               {/* 우측 이미지 영역 */}
-              <div className="flex">
+              <div
+                ref={imgColRef}
+                className="aspect-[3/4] overflow-hidden rounded-2xl shadow-lg"
+              >
                 {data.heroImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={data.heroImage}
                     alt="영우테크"
-                    className="w-full rounded-2xl object-cover shadow-lg aspect-[3/4]"
+                    className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="flex w-full aspect-[3/4] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                  <div className="flex h-full w-full items-center justify-center border border-white/10 bg-white/5">
                     <p className="text-sm text-slate-500">이미지 준비중</p>
                   </div>
                 )}
