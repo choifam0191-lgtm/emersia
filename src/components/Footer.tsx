@@ -28,9 +28,9 @@ export function Footer() {
               <br />건설현장 안전을 지원합니다.
             </p>
 
-            {/* 연락처 */}
-            <p className="mt-8 text-base font-semibold text-ink-900">연락처</p>
-            <ul className="mt-3 space-y-2 text-sm text-ink-600">
+            {/* 연락처 — 폰트 축소로 우측 묶음 높이에 근접 */}
+            <p className="mt-6 text-sm font-semibold text-ink-900">연락처</p>
+            <ul className="mt-2 space-y-1.5 text-xs text-ink-600">
               <li>
                 이메일:{" "}
                 <a
@@ -66,8 +66,8 @@ export function Footer() {
           <div className="md:justify-self-end">
             <div className="grid grid-cols-2 gap-8 md:gap-12">
 
-              {/* 영우테크 */}
-              <div>
+              {/* 영우테크 — flex-col + 로고 mt-auto 하단 고정 */}
+              <div className="flex flex-col">
                 <p className="text-xs font-semibold text-safety-blue">제조·공급</p>
                 <div className="mt-2 space-y-1">
                   <p className="text-sm font-semibold text-ink-900">㈜영우테크</p>
@@ -79,12 +79,12 @@ export function Footer() {
                 <img
                   src="/footer-logos/YT_logo.png"
                   alt="영우테크 인증 로고 (KC, 메인비즈, ISO 9001, G-CERTi)"
-                  className="mt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
+                  className="mt-auto pt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
                 />
               </div>
 
-              {/* 메디피아 */}
-              <div>
+              {/* 메디피아 — flex-col + 로고 mt-auto 하단 고정 */}
+              <div className="flex flex-col">
                 <p className="text-xs font-semibold text-safety-blue">판매</p>
                 <div className="mt-2 space-y-1">
                   <p className="text-sm font-semibold text-ink-900">메디피아(주)</p>
@@ -95,7 +95,7 @@ export function Footer() {
                 <img
                   src="/footer-logos/MP_logo.png"
                   alt="메디피아 인증 로고 (한국ESG기업협회, 벤처확인기업)"
-                  className="mt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
+                  className="mt-auto pt-4 block h-[44px] w-auto object-contain object-left md:h-[52px]"
                 />
               </div>
             </div>

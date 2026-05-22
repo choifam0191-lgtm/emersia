@@ -38,10 +38,10 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
                   <img
                     src={data.heroImage}
                     alt="영우테크"
-                    className="w-full rounded-2xl object-cover shadow-lg aspect-[3/4]"
+                    className="w-full rounded-2xl object-cover shadow-lg aspect-[4/3]"
                   />
                 ) : (
-                  <div className="flex w-full aspect-[3/4] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                  <div className="flex w-full aspect-[4/3] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
                     <p className="text-sm text-slate-500">이미지 준비중</p>
                   </div>
                 )}
