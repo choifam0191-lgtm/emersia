@@ -59,7 +59,7 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
               {/* 우측 이미지 영역 */}
               <div
                 ref={imgColRef}
-                className="aspect-[3/4] overflow-hidden rounded-2xl shadow-lg"
+                className="aspect-square overflow-hidden rounded-2xl shadow-lg"
               >
                 {data.heroImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
