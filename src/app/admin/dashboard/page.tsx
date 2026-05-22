@@ -1,5 +1,5 @@
 import { LogoutButton } from "@/components/admin/LogoutButton";
-import { FileText, Building2, Images, HelpCircle, Mail, BookOpen, LayoutGrid, BarChart2 } from "lucide-react";
+import { FileText, Building2, Images, HelpCircle, Mail, BookOpen, LayoutGrid, BarChart2, FolderOpen } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
@@ -50,6 +50,13 @@ const sections = [
     description: "페이지 조회수·카탈로그 다운로드 수 확인 및 일별 차트",
     icon: BarChart2,
     href: "/admin/analytics",
+    active: true,
+  },
+  {
+    title: "자료 파일 관리",
+    description: "카탈로그·제안서 PDF 파일 등록 및 교체",
+    icon: FolderOpen,
+    href: "/admin/files",
     active: true,
   },
   {
