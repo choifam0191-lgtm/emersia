@@ -45,18 +45,23 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
         <div className="mx-auto max-w-6xl px-5">
           <MotionInView>
             <p className="text-sm font-semibold text-blue-400">{data.hero.eyebrow}</p>
-            <h1 className="mt-3 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl md:leading-snug">
-              {data.hero.headline}
-            </h1>
           </MotionInView>
-          <MotionInView delay={0.08}>
-            <div className="mt-8 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
-              <div ref={textColRef} className="space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
-                {data.hero.paragraphs.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+          <div className="mt-3 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start">
+            {/* 좌측: 제목 + 본문 */}
+            <MotionInView>
+              <div ref={textColRef}>
+                <h1 className="max-w-4xl text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl md:leading-snug">
+                  {data.hero.headline}
+                </h1>
+                <div className="mt-8 space-y-4 text-base leading-relaxed text-slate-400 md:text-lg">
+                  {data.hero.paragraphs.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
               </div>
-              {/* 우측 이미지 영역 */}
+            </MotionInView>
+            {/* 우측 이미지 영역: 상단 = 제목 라인 */}
+            <MotionInView delay={0.08}>
               <div
                 ref={imgColRef}
                 className="aspect-square overflow-hidden rounded-2xl shadow-lg"
@@ -74,8 +79,8 @@ export function CompanyContent({ data, contact, partnerSlider }: Props) {
                   </div>
                 )}
               </div>
-            </div>
-          </MotionInView>
+            </MotionInView>
+          </div>
         </div>
       </section>
 
