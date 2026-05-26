@@ -77,8 +77,14 @@ export function ContactForm({ initialType }: Props) {
       });
 
       if (!res.ok) {
-        const body = await res.json();
-        throw new Error(body.error ?? "전송 실패");
+        let msg = "전송 실패. 잠시 후 다시 시도해주세요.";
+        try {
+          if (res.headers.get("content-type")?.includes("application/json")) {
+            const body = await res.json();
+            if (body.error) msg = body.error;
+          }
+        } catch {}
+        throw new Error(msg);
       }
 
       setStatus("success");

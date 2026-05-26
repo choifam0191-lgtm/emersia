@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
+  try {
   const { company, name, phone, email, location, purpose, inquiryType, message } =
     await req.json();
 
@@ -17,6 +18,9 @@ export async function POST(req: NextRequest) {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
     },
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 15_000,
   });
 
   const today = new Date().toISOString().slice(0, 10);
@@ -75,4 +79,11 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("[contact] sendMail error:", err);
+    return NextResponse.json(
+      { error: "메일 전송에 실패했습니다. 잠시 후 다시 시도해주세요." },
+      { status: 500 }
+    );
+  }
 }
