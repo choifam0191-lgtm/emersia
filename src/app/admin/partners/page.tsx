@@ -263,7 +263,7 @@ function AddPartnerForm({ onAdded }: { onAdded: (partner: Partner) => void }) {
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-600">
             로고 이미지{" "}
-            <span className="font-normal text-slate-400">(PNG, SVG 권장 / 최대 5MB)</span>
+            <span className="font-normal text-slate-400">(PNG 권장 / 최대 5MB)</span>
           </label>
           <div className="flex items-center gap-3">
             <button
@@ -285,7 +285,7 @@ function AddPartnerForm({ onAdded }: { onAdded: (partner: Partner) => void }) {
           <input
             ref={fileRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+            accept="image/jpeg,image/png,image/webp,image/gif"
             className="hidden"
             onChange={handleFileChange}
           />

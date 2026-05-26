@@ -5,7 +5,7 @@ import path from "path";
 const PARTNERS_PATH = path.join(process.cwd(), "src", "data", "partners.json");
 const PUBLIC_PARTNERS = path.join(process.cwd(), "public", "partners");
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 type Partner = { id: string; name: string; logo: string };
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     }
     if (!ALLOWED_TYPES.includes(file.type)) {
       return NextResponse.json(
-        { error: "JPEG, PNG, WEBP, GIF, SVG만 업로드 가능합니다." },
+        { error: "JPEG, PNG, WEBP, GIF만 업로드 가능합니다." },
         { status: 400 }
       );
     }

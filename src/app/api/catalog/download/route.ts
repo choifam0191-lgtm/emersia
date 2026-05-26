@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { Readable } from "stream";
 
 const ANALYTICS_PATH = path.join(process.cwd(), "src", "data", "analytics.json");
 const PDF_PATH = path.join(process.cwd(), "public", "catalog.pdf");
@@ -47,12 +48,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const buffer = fs.readFileSync(PDF_PATH);
-    return new NextResponse(buffer, {
+    const stat = fs.statSync(PDF_PATH);
+    const nodeStream = fs.createReadStream(PDF_PATH);
+    const webStream = Readable.toWeb(nodeStream) as unknown as ReadableStream;
+    return new NextResponse(webStream, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": 'attachment; filename="emersia-catalog.pdf"',
-        "Content-Length": String(buffer.length),
+        "Content-Length": String(stat.size),
         "Cache-Control": "no-store",
       },
     });
