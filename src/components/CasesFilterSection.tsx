@@ -4,10 +4,7 @@ import { useState } from "react";
 import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
 import { CaseCard } from "@/components/CaseCard";
-import { getAllCases } from "@/lib/cases";
 import type { Case } from "@/lib/cases";
-
-const cases = getAllCases();
 
 function DetailRow({ label, text }: { label: string; text: string }) {
   return (
@@ -54,7 +51,7 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-export function CasesFilterSection() {
+export function CasesFilterSection({ cases }: { cases: Case[] }) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   const openCase: Case | undefined = cases.find((c) => c.slug === openSlug);

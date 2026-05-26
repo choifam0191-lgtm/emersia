@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CasesFilterSection } from "@/components/CasesFilterSection";
 import { CTASection } from "@/components/CTASection";
 import { PageViewTracker } from "@/components/PageViewTracker";
+import { getAllCases } from "@/lib/cases";
 
 export const metadata: Metadata = {
   title: "설치사례 | 건설현장 LTE 안전방송 구성 사례",
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function CasesPage() {
+  const cases = getAllCases();
+
   return (
     <main>
       <PageViewTracker pagePath="/cases" />
@@ -28,7 +31,7 @@ export default function CasesPage() {
       </section>
 
       {/* 필터 + 사례 카드 */}
-      <CasesFilterSection />
+      <CasesFilterSection cases={cases} />
 
       <CTASection />
     </main>

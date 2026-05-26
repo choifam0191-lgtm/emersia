@@ -1,4 +1,7 @@
-import casesData from "@/data/cases.json";
+import fs from "fs";
+import path from "path";
+import { cache } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 
 export type CaseDetail = {
   overview: string;
@@ -22,10 +25,13 @@ export type Case = {
   detail: CaseDetail;
 };
 
-export function getAllCases(): Case[] {
-  return casesData.cases as Case[];
-}
+export const getAllCases = cache((): Case[] => {
+  noStore();
+  const filePath = path.join(process.cwd(), "src", "data", "cases.json");
+  const raw = fs.readFileSync(filePath, "utf-8");
+  return (JSON.parse(raw) as { cases: Case[] }).cases;
+});
 
 export function getCaseBySlug(slug: string): Case | undefined {
-  return (casesData.cases as Case[]).find((c) => c.slug === slug);
+  return getAllCases().find((c) => c.slug === slug);
 }
