@@ -6,6 +6,27 @@ const ANALYTICS_PATH = path.join(process.cwd(), "src", "data", "analytics.json")
 const TRACKED = new Set(["/", "/company", "/resources", "/cases", "/contact"]);
 const BOT_RE = /bot|crawler|spider|crawling|slurp|mediapartners|facebookexternalhit|twitterbot|linkedinbot|pingdom|uptimerobot/i;
 
+// IP-based dedup: one count per IP per page per day
+const seen = new Set<string>();
+let seenDate = "";
+
+function getIp(req: NextRequest): string {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
+function isDupe(ip: string, pagePath: string, date: string): boolean {
+  if (date !== seenDate) {
+    seen.clear();
+    seenDate = date;
+  }
+  const key = `${ip}:${pagePath}`;
+  if (seen.has(key)) return true;
+  seen.add(key);
+  return false;
+}
+
 type DayStat = { date: string; count: number };
 type Analytics = { pageViews: Record<string, DayStat[]>; catalogDownloads: DayStat[] };
 
@@ -43,6 +64,8 @@ export async function POST(req: NextRequest) {
     if (!pagePath || !TRACKED.has(pagePath)) return NextResponse.json({ ok: true });
 
     const date = today();
+    const ip = getIp(req);
+    if (isDupe(ip, pagePath, date)) return NextResponse.json({ ok: true });
     const data = readAnalytics();
     if (!data.pageViews[pagePath]) data.pageViews[pagePath] = [];
     data.pageViews[pagePath] = increment(data.pageViews[pagePath], date);
