@@ -69,8 +69,11 @@ export async function POST(req: NextRequest) {
   }
 
   const adminPassword = process.env.ADMIN_PASSWORD ?? "";
+  // 미설정 시에도 일반 401로 응답 — 서버 상태를 외부에 노출하지 않음
   if (!adminPassword) {
-    return NextResponse.json({ error: "서버 설정 오류." }, { status: 500 });
+    console.error("[admin/login] ADMIN_PASSWORD env not set");
+    recordFail(ip);
+    return NextResponse.json({ error: "비밀번호가 올바르지 않습니다." }, { status: 401 });
   }
 
   if (!safeEqual(password, adminPassword)) {
