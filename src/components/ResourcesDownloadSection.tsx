@@ -10,7 +10,7 @@ const resources = [
     title: "제품 카탈로그",
     desc: "제품 라인업, 스펙, 구성 예시를 한 번에 확인하세요.",
     href: "/api/catalog/download",
-    download: "emersia-catalog.pdf",
+    download: "3S_catalog.pdf",
     ready: true,
   },
   {

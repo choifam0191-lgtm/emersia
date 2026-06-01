@@ -5,8 +5,7 @@ import { getContent } from "@/lib/content";
 
 // PDF 파일 실존 여부를 서버사이드에서 확인 → 없으면 ready=false 로 덮어씀
 const PDF_PATHS: Record<string, string> = {
-  "/api/catalog/download": path.join(process.cwd(), "public", "catalog.pdf"),
-  "/api/proposal/download": path.join(process.cwd(), "public", "3S_propo.pdf"),
+  "/api/catalog/download": path.join(process.cwd(), "public", "3S_catalog.pdf"),
 };
 
 function isPdfReady(href: string): boolean {
@@ -20,7 +19,7 @@ export function ResourcesFilterSection() {
   return (
     <section className="border-t border-slate-200/50 bg-slate-50 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {resources.cards.map((r) => (
             <ResourceCard
               key={r.title}

@@ -4,7 +4,7 @@ import path from "path";
 import { Readable } from "stream";
 
 const ANALYTICS_PATH = path.join(process.cwd(), "src", "data", "analytics.json");
-const PDF_PATH = path.join(process.cwd(), "public", "catalog.pdf");
+const PDF_PATH = path.join(process.cwd(), "public", "3S_catalog.pdf");
 const BOT_RE = /bot|crawler|spider|crawling|slurp|mediapartners|facebookexternalhit|twitterbot|linkedinbot|pingdom|uptimerobot/i;
 
 type DayStat = { date: string; count: number };
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse(webStream, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="emersia-catalog.pdf"',
+        "Content-Disposition": 'attachment; filename="3S_catalog.pdf"',
         "Content-Length": String(stat.size),
         "Cache-Control": "no-store",
       },

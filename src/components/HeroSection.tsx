@@ -48,7 +48,7 @@ export function HeroSection({ data }: Props) {
               </Link>
               <a
                 href="/api/catalog/download"
-                download="emersia-catalog.pdf"
+                download="3S_catalog.pdf"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
                 카탈로그 다운로드

@@ -40,7 +40,7 @@ export function CTASection() {
           </Link>
           <a
             href="/api/catalog/download"
-            download="emersia-catalog.pdf"
+            download="3S_catalog.pdf"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-600 bg-transparent px-7 py-3.5 text-sm font-medium text-slate-300 transition hover:border-slate-400 hover:bg-slate-800 sm:w-auto"
           >
             카탈로그 다운로드
