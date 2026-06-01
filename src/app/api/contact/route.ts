@@ -10,13 +10,74 @@ function escapeHtml(s: string): string {
     .replace(/'/g, "&#39;");
 }
 
+// ── 공개 엔드포인트 보호: IP별 제출 제한 (PM2 fork 단일 인스턴스에서 유지) ──
+const WINDOW_MS = 10 * 60 * 1000; // 10분
+const MAX_SUBMITS = 5; // 윈도우당 최대 제출 수
+type RateEntry = { count: number; firstAt: number };
+const submits = new Map<string, RateEntry>();
+
+function getIp(req: NextRequest): string {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
+function checkRate(ip: string): { ok: true } | { ok: false; retryAfter: number } {
+  const now = Date.now();
+  const e = submits.get(ip);
+  if (!e || now - e.firstAt > WINDOW_MS) {
+    submits.set(ip, { count: 1, firstAt: now });
+    return { ok: true };
+  }
+  if (e.count >= MAX_SUBMITS) {
+    return { ok: false, retryAfter: Math.ceil((e.firstAt + WINDOW_MS - now) / 1000) };
+  }
+  e.count += 1;
+  return { ok: true };
+}
+
+// ── 필드 길이 상한 (대용량 payload·메일 폭주 방지) ──
+const LIMITS: Record<string, number> = {
+  company: 100,
+  name: 50,
+  phone: 20,
+  email: 100,
+  location: 100,
+  purpose: 50,
+  inquiryType: 30,
+  message: 2000,
+};
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function POST(req: NextRequest) {
   try {
-  const { company, name, phone, email, location, purpose, inquiryType, message } =
-    await req.json();
+  const ip = getIp(req);
+  const rate = checkRate(ip);
+  if (!rate.ok) {
+    return NextResponse.json(
+      { error: `잠시 후 다시 시도해주세요. (${rate.retryAfter}초)` },
+      { status: 429, headers: { "Retry-After": String(rate.retryAfter) } }
+    );
+  }
+
+  const body = await req.json();
+  const { company, name, phone, email, location, purpose, inquiryType, message } = body;
 
   if (!company || !name || !phone || !email || !purpose || !message) {
     return NextResponse.json({ error: "필수 항목을 모두 입력해주세요." }, { status: 400 });
+  }
+
+  // 타입·길이 검증 (서버측 — 클라이언트 우회 방지)
+  for (const [key, max] of Object.entries(LIMITS)) {
+    const v = body[key];
+    if (v != null && (typeof v !== "string" || v.length > max)) {
+      return NextResponse.json({ error: "입력값이 올바르지 않습니다." }, { status: 400 });
+    }
+  }
+
+  if (!EMAIL_RE.test(email)) {
+    return NextResponse.json({ error: "올바른 이메일 형식이 아닙니다." }, { status: 400 });
   }
 
   const transporter = nodemailer.createTransport({
