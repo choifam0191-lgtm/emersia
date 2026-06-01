@@ -62,7 +62,12 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { company, name, phone, email, location, purpose, inquiryType, message } = body;
+  const { company, name, phone, email, location, purpose, inquiryType, message, website } = body;
+
+  // 허니팟: 사람에게 보이지 않는 필드가 채워졌으면 봇 → 조용히 성공 처리(메일 미발송)
+  if (typeof website === "string" && website.trim() !== "") {
+    return NextResponse.json({ ok: true });
+  }
 
   if (!company || !name || !phone || !email || !purpose || !message) {
     return NextResponse.json({ error: "필수 항목을 모두 입력해주세요." }, { status: 400 });

@@ -57,6 +57,7 @@ export function ContactForm({ initialType }: Props) {
     const location = (form.elements.namedItem("location") as HTMLInputElement).value;
     const purpose = (form.elements.namedItem("purpose") as HTMLSelectElement).value;
     const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+    const website = (form.elements.namedItem("website") as HTMLInputElement)?.value ?? "";
 
     const errors: { phone?: string; email?: string } = {};
     if (phone.length < 8) errors.phone = "올바른 연락처를 입력해주세요";
@@ -73,7 +74,7 @@ export function ContactForm({ initialType }: Props) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company, name, phone, email, location, purpose, inquiryType, message }),
+        body: JSON.stringify({ company, name, phone, email, location, purpose, inquiryType, message, website }),
       });
 
       if (!res.ok) {
@@ -115,6 +116,19 @@ export function ContactForm({ initialType }: Props) {
   return (
     <Card>
       <form onSubmit={handleSubmit} className="grid gap-5">
+        {/* 허니팟: 봇 차단용 숨김 필드 (사람에게는 보이지 않음) */}
+        <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
+          <label>
+            웹사이트
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </label>
+        </div>
+
         {/* 문의 유형 */}
         <div className="grid gap-2">
           <span className={labelClass}>문의 유형</span>
